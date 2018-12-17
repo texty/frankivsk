@@ -1,0 +1,41 @@
+body {
+  font-family: 'Roboto Mono', monospace;
+  background-color: #484d60; }
+
+#content {
+  display: grid;
+  grid-template-columns: 250px auto;
+  grid-gap: 50px; }
+
+#scatter {
+  width: 900px; }
+
+.bubble {
+  fill: #E01A25; }
+
+#table {
+  height: 75vh;
+  overflow-y: auto;
+  direction: rtl; }
+
+table {
+  direction: rtl; }
+
+td {
+  padding-bottom: 20px;
+  font-size: 13px;
+  color: #a8a8a8;
+  cursor: pointer; }
+
+g.tick text {
+  fill: #cccccc; }
+
+g.tick line {
+  fill: #cccccc;
+  stroke: #cccccc; }
+
+.legend {
+  fill: #cccccc;
+  font-size: 13px; }
+
+/*# sourceMappingURL=styles.css.map */
