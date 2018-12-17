@@ -203,8 +203,9 @@ retrieve_plot_data(function(data) {
             .enter()
             .append("rect")
             .attr("class", "bubble")
+            .style("opacity", 0)
             .transition()
-            .duration(1000)
+            // .duration(500)
 
             .attr('x', function (d) {
                         return xScale(d.registration);
@@ -222,6 +223,10 @@ retrieve_plot_data(function(data) {
             .attr('width', 4)
             .attr('height', 1.5);
 
+
+        setTimeout(function(){
+            svg.selectAll(".bubble").style("opacity", 1)
+        }, 500);
 
 
         var zoom = d3.zoom()
