@@ -8,18 +8,23 @@ body {
   grid-gap: 50px; }
 
 #scatter {
-  width: 900px; }
+  grid-column: 2/3;
+  width: 100%; }
 
 .bubble {
-  fill: #E01A25; }
+  fill: #484d60; }
 
 #table {
-  height: 75vh;
+  max-height: 80vh;
   overflow-y: auto;
   direction: rtl; }
 
 table {
   direction: rtl; }
+
+#legend {
+  display: flex;
+  fill: #484d60; }
 
 td {
   padding-bottom: 20px;
@@ -36,6 +41,9 @@ g.tick line {
 
 .legend {
   fill: #cccccc;
-  font-size: 13px; }
+  font-size: 11px; }
+
+path.domain {
+  opacity: 0; }
 
 /*# sourceMappingURL=styles.css.map */
