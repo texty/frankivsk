@@ -5,6 +5,7 @@
 var plot_data;
 var parseDate = d3.timeParse("%Y-%m-%d");
 var formatTime = d3.timeFormat("%b");
+var oneDay = 24 * 60 * 60 * 1000;
 
 
 function retrieve_plot_data(cb) {
@@ -25,10 +26,16 @@ function retrieve_plot_data(cb) {
     })
 }
 
-var viewBox = $("#scatter svg")[0].getAttribute("viewBox").split(" "),
-    size = viewBox.slice(2),
-    ww = size[0],
-    hh = size[1];
+var viewBox = $("#scatter")[0].getBoundingClientRect(),
+    ww = viewBox.width,
+    hh = viewBox.height;
+
+
+
+// var viewBox = $("#scatter svg")[0].getAttribute("viewBox").split(" "),
+//     size = viewBox.slice(2),
+//     ww = size[0],
+//     hh = size[1];
 
 
 // var n = 50; // number of points
@@ -53,10 +60,13 @@ retrieve_plot_data(function(data) {
         var svg = d3.select("svg"),
             // width = +svg.attr("width"),
             // height = +svg.attr("height"),
-            width = 0.8 * ww,
-            height = 0.8 * hh;
+            width =  0.9 * ww,
+            height = 0.9 * hh;
+    
 
-        var margin = {top: (0.1 * width), right: (0.1 * width), bottom: (0.1 * width), left: (0.1 * width)};
+
+
+       var margin = {top: 10, right: (0.1 * width), bottom: (0.1 * width), left: 40};
 
         // create a clipping region
         svg.append("defs").append("clipPath")
@@ -83,9 +93,12 @@ retrieve_plot_data(function(data) {
 // Draw Axis
 
         var gX = svg.append('g')
+            .attr("class", "x-axis")
             .attr('transform', 'translate(' + margin.left + ',' + (margin.top + height) + ')')
             .call(xAxis);
+
         var gY = svg.append('g')
+            .attr("class", "y-axis")
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
             .call(yAxis);
 
@@ -111,7 +124,7 @@ retrieve_plot_data(function(data) {
             .attr('y', function (d) {
                 return yScale(d.counterTotal);
             })
-            .attr('width', 4)
+            .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
             .attr('height', 1.5)
             // .attr('r', 2)
             .style('fill', function (d) {
@@ -123,7 +136,7 @@ retrieve_plot_data(function(data) {
 
             })
             .on("click", function(d){
-                console.log(d)
+
             });
 
         d3.selectAll("path.domain").remove();
@@ -157,12 +170,34 @@ retrieve_plot_data(function(data) {
 // Pan and zoom
 
 
-
     function update(selected) {
 
          var filteredDataNew = data.filter(function (d) {
             return d.service === selected
         });
+
+        var viewBox = $("#scatter")[0].getBoundingClientRect(),
+            ww = viewBox.width,
+            hh = viewBox.height;
+
+
+        var width =  0.9 * ww,
+            height = 0.9 * hh;
+
+
+        var xScale = d3.scaleTime()
+            .domain([parseDate("2017-01-01"), parseDate("2017-12-31")])
+            .range([0, width]);
+
+        var yScale = d3.scaleLinear()
+            .domain([0, 140])
+            .range([height, 0]);
+
+
+        var xAxis = d3.axisBottom(xScale)
+            .tickFormat(d3.timeFormat("%b"));
+
+        var yAxis = d3.axisLeft(yScale);
 
 
         var t = d3.transition()
@@ -180,6 +215,8 @@ retrieve_plot_data(function(data) {
         // UPDATE
         bubble
             .transition(t)
+            .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
+            .attr('height', 1.5)
             .attr('x', function (d) {
                 // console.log(d);
                 return xScale(d.registration);
@@ -220,7 +257,7 @@ retrieve_plot_data(function(data) {
                     return "#E01A25"
                 }
             })
-            .attr('width', 4)
+            .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
             .attr('height', 1.5);
 
 
@@ -234,8 +271,6 @@ retrieve_plot_data(function(data) {
             .extent([[0, 0], [width, height]])
             .on("zoom", zoomed);
 
-
-
         svg.append("rect")
             .attr("width", width)
             .attr("height", height)
@@ -246,18 +281,26 @@ retrieve_plot_data(function(data) {
         ;
 
         function zoomed() {
-// create new scale ojects based on event
+
+            // create new scale ojects based on event
+
             var new_xScale = d3.event.transform.rescaleX(xScale);
             var new_yScale = d3.event.transform.rescaleY(yScale);
+
+
 // update axes
             gX.call(xAxis.scale(new_xScale));
             gY.call(yAxis.scale(new_yScale));
 
+            var oneDay = 24 * 60 * 60 * 1000;
+            var daysAmount = Math.abs(new_xScale.domain()[0] - new_xScale.domain()[1]) / oneDay;
+
+
             // var pointsZ = points_g.selectAll('rect.bubble');
             var bubbleZ = points_g.selectAll(".bubble");
             bubbleZ.data(filteredDataNew)
-                .attr('width', 4)
-                .attr('height', 1.5)
+                .attr('width', (width / daysAmount) / 1.5)
+                .attr('height', (height / Math.abs(new_yScale.domain()[0] - new_yScale.domain()[1])) / 1.5 )
                 .attr('x', function (d) {
                     return new_xScale(d.registration);
                 })
@@ -271,6 +314,59 @@ retrieve_plot_data(function(data) {
     }
 
 
+    $(window).on('resize', function() {
+        var viewBox = $("#scatter")[0].getBoundingClientRect(),
+            ww = viewBox.width,
+            hh = viewBox.height;
+
+
+        var width =  0.9 * ww,
+            height = 0.9 * hh;
+
+
+        var xScale = d3.scaleTime()
+            .domain([parseDate("2017-01-01"), parseDate("2017-12-31")])
+            .range([0, width]);
+
+        var yScale = d3.scaleLinear()
+            .domain([0, 140])
+            .range([height, 0]);
+
+
+        var xAxis = d3.axisBottom(xScale)
+            .tickFormat(d3.timeFormat("%b"));
+
+        var yAxis = d3.axisLeft(yScale);
+
+
+        svg.select('.x-axis').call(xAxis);
+        svg.select('.y-axis').call(yAxis);
+
+
+        points_g.selectAll(".bubble")
+            .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
+            .attr('height', 1.5)
+            .attr('x', function (d) {
+                // console.log(d.registration);
+                return xScale(d.registration);
+            })
+            .attr('y', function (d) {
+                return yScale(d.counterTotal);
+            });
+
+
+        legend.select('rect')
+            .attr('x', width);
+
+
+        legend.select('text')
+            .attr('x', width- 6)
+            ;
+
+    });
+
+
+    update(selected);
 
 
 
@@ -283,6 +379,9 @@ retrieve_plot_data(function(data) {
 
         data.sort(function(a, b){ return b.Freq - a.Freq});
 
+        data = data.filter(function(d) {
+            return d.Freq > 100
+        });
 
         var table = d3.select("#table")
             .style("height", 0.8 * hh)
@@ -310,8 +409,12 @@ retrieve_plot_data(function(data) {
             })
             .on("click", function(d){
                 var selectedNew = d.Var1;
-
+                $('td').css("font-weight", 400);
+                $('td').css("color", "#a8a8a8");
+                $(this).css("font-weight", 800);
+                $(this).css("color", "#a8a8a8");
                 update(selectedNew);
+                $("#scatterHeader h2").text(selectedNew);
             });
 
     });
