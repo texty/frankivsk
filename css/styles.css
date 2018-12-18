@@ -50,7 +50,8 @@ body {
       height: 50vh; } }
 
 .bubble {
-  fill: #484d60; }
+  fill: #484d60;
+  cursor: pointer; }
 
 #table {
   grid-row: 2/3;
@@ -86,11 +87,18 @@ g.tick line {
   fill: #cccccc;
   stroke: #cccccc; }
 
+g.tick path {
+  fill: #cccccc;
+  stroke: #cccccc; }
+
 .legend {
   fill: #cccccc;
   font-size: 12px; }
 
 path.domain {
   opacity: 0; }
+
+#zoom {
+  cursor: hand; }
 
 /*# sourceMappingURL=styles.css.map */

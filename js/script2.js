@@ -62,7 +62,7 @@ retrieve_plot_data(function(data) {
             // height = +svg.attr("height"),
             width =  0.9 * ww,
             height = 0.9 * hh;
-    
+
 
 
 
@@ -86,7 +86,8 @@ retrieve_plot_data(function(data) {
 
 // create axis objects
         var xAxis = d3.axisBottom(xScale)
-            .tickFormat(d3.timeFormat("%b"));
+            // .tickFormat(d3.timeFormat("%b"))
+            ;
 
         var yAxis = d3.axisLeft(yScale)
             .ticks(20, "s");
@@ -154,6 +155,8 @@ retrieve_plot_data(function(data) {
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 
+       
+
         var legend = lG.selectAll('legend')
             .data(color.domain())
             .enter().append('g')
@@ -201,7 +204,8 @@ retrieve_plot_data(function(data) {
 
 
         var xAxis = d3.axisBottom(xScale)
-            .tickFormat(d3.timeFormat("%b"));
+            // .tickFormat(d3.timeFormat("%b"))
+            ;
 
         var yAxis = d3.axisLeft(yScale);
 
@@ -310,26 +314,17 @@ retrieve_plot_data(function(data) {
         });
 
         function zoomed() {
-
-            // create new scale ojects based on event
-
             var new_xScale = d3.event.transform.rescaleX(xScale);
             var new_yScale = d3.event.transform.rescaleY(yScale);
 
-
-// update axes
             gX.call(xAxis.scale(new_xScale));
             gY.call(yAxis.scale(new_yScale));
 
             var oneDay = 24 * 60 * 60 * 1000;
             var daysAmount = Math.abs(new_xScale.domain()[0] - new_xScale.domain()[1]) / oneDay;
 
-
-            // var pointsZ = points_g.selectAll('rect.bubble');
             var bubbleZ = points_g.selectAll(".bubble");
-            bubbleZ.data(filteredDataNew)
-                .attr('width', (width / daysAmount) / 1.5)
-                // .attr('height', (height / Math.abs(new_yScale.domain()[0] - new_yScale.domain()[1])) / 1.5 )
+            bubbleZ.attr('width', (width / daysAmount) / 1.5)
                 .attr('height', (width / daysAmount) / 1.5)
                 .attr('x', function (d) {
                     return new_xScale(d.registration);
@@ -337,8 +332,6 @@ retrieve_plot_data(function(data) {
                 .attr('y', function (d) {
                     return new_yScale(d.counterTotal);
                 });
-
-
         }
 
     }
@@ -364,7 +357,8 @@ retrieve_plot_data(function(data) {
 
 
         var xAxis = d3.axisBottom(xScale)
-            .tickFormat(d3.timeFormat("%b"));
+            // .tickFormat(d3.timeFormat("%b"))
+            ;
 
         var yAxis = d3.axisLeft(yScale);
 
