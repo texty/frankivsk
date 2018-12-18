@@ -134,9 +134,17 @@ retrieve_plot_data(function(data) {
                     return "#E01A25"
                 }
 
-            })
-            .on("click", function(d){
+            });
 
+
+    svg.selectAll(".bubble")
+        .on("mousedown", function() {
+            d3.event.stopImmediatePropagation();
+        });
+
+
+    points.on("click", function(d){
+        alert("hi")
             });
 
         d3.selectAll("path.domain").remove();
@@ -185,12 +193,10 @@ retrieve_plot_data(function(data) {
             height = 0.9 * hh;
 
 
-        var xScale = d3.scaleTime()
-            .domain([parseDate("2017-01-01"), parseDate("2017-12-31")])
+       xScale.domain([parseDate("2017-01-01"), parseDate("2017-12-31")])
             .range([0, width]);
 
-        var yScale = d3.scaleLinear()
-            .domain([0, 140])
+       yScale.domain([0, 140])
             .range([height, 0]);
 
 
@@ -199,6 +205,8 @@ retrieve_plot_data(function(data) {
 
         var yAxis = d3.axisLeft(yScale);
 
+        svg.select('.x-axis').call(xAxis);
+        svg.select('.y-axis').call(yAxis);
 
         var t = d3.transition()
             .duration(750);
@@ -206,6 +214,11 @@ retrieve_plot_data(function(data) {
         // JOIN new data with old elements.
         var bubble = points_g.selectAll(".bubble")
             .data(filteredDataNew);
+
+        bubble.on("click", function() {
+            alert("hi")
+        });
+
 
         // EXIT
         bubble.exit()
@@ -265,13 +278,20 @@ retrieve_plot_data(function(data) {
             svg.selectAll(".bubble").style("opacity", 1)
         }, 500);
 
+        points_g.selectAll(".bubble").on("click", function() {
+            alert("hi")
+        });
+
+
 
         var zoom = d3.zoom()
             .scaleExtent([1, 20])
+            .translateExtent([[0, 0], [width, height]])
             .extent([[0, 0], [width, height]])
             .on("zoom", zoomed);
 
         svg.append("rect")
+            .attr("id", "zoom")
             .attr("width", width)
             .attr("height", height)
             .style("fill", "none")
@@ -279,6 +299,15 @@ retrieve_plot_data(function(data) {
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
             .call(zoom)
         ;
+
+        $("#zoom").on("click", function(){
+            console.log(this);
+            $(this).css("pointer-events", "none")
+        });
+
+        $(window).on("mousewheel", function(){
+            $("#zoom").css("pointer-events", "all")
+        });
 
         function zoomed() {
 
@@ -300,7 +329,8 @@ retrieve_plot_data(function(data) {
             var bubbleZ = points_g.selectAll(".bubble");
             bubbleZ.data(filteredDataNew)
                 .attr('width', (width / daysAmount) / 1.5)
-                .attr('height', (height / Math.abs(new_yScale.domain()[0] - new_yScale.domain()[1])) / 1.5 )
+                // .attr('height', (height / Math.abs(new_yScale.domain()[0] - new_yScale.domain()[1])) / 1.5 )
+                .attr('height', (width / daysAmount) / 1.5)
                 .attr('x', function (d) {
                     return new_xScale(d.registration);
                 })

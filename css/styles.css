@@ -1,6 +1,7 @@
 body {
   font-family: 'Roboto Mono', monospace;
-  background-color: #484d60; }
+  background-color: #484d60;
+  overflow-y: hidden; }
 
 #content {
   display: grid;
@@ -27,7 +28,7 @@ body {
   grid-column: 2/3;
   grid-row: 1/2;
   margin-left: 40px;
-  width: 60%;
+  width: 80%;
   height: 100px;
   color: #a8a8a8;
   display: flex; }
@@ -54,7 +55,7 @@ body {
 #table {
   grid-row: 2/3;
   grid-column: 1/2;
-  max-height: 80vh;
+  max-height: 75vh;
   overflow-y: auto;
   direction: rtl; }
   @media only screen and (max-width: 825px) and (orientation: portrait) {
