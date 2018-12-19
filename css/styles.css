@@ -51,7 +51,7 @@ body {
 
 .bubble {
   fill: #484d60;
-  cursor: pointer; }
+  outline: none; }
 
 #table {
   grid-row: 2/3;
@@ -100,5 +100,8 @@ path.domain {
 
 #zoom {
   cursor: hand; }
+
+.wrappedText {
+  margin-bottom: 10px; }
 
 /*# sourceMappingURL=styles.css.map */

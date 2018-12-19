@@ -4,8 +4,11 @@
 
 var plot_data;
 var parseDate = d3.timeParse("%Y-%m-%d");
+var format = d3.timeFormat("%d-%b-%Y");
 
 var oneDay = 24 * 60 * 60 * 1000;
+
+
 
 
 function retrieve_plot_data(cb) {
@@ -17,7 +20,8 @@ function retrieve_plot_data(cb) {
         myData.forEach(function (d) {
             d.counterTotal = +d.counterTotal;
             d.counterByType = +d.counterByType;
-            d.registration = parseDate(d.registration)
+            d.registration = parseDate(d.registration);
+            d.completion = parseDate(d.completion)
         });
 
         plot_data = myData;
@@ -100,7 +104,7 @@ retrieve_plot_data(function(data) {
     //     });
 
 
-    points.on("click", function(d){ alert("hi")  });
+    // points.on("click", function(d){ alert("hi")  });
 
     // d3.selectAll("path.domain").remove();
 
@@ -151,8 +155,10 @@ retrieve_plot_data(function(data) {
     //DRAW SCATTER PLOT
     function update(selected) {
 
-        // $("#scatter").find("svg").empty();
-        xAxis.tickFormat(d3.timeFormat("%b"))
+
+
+
+        xAxis.tickFormat(d3.timeFormat("%b"));
 
         //reset zoom
         // points_g.attr("transform", 'translate(' + margin.left + ',' + 12  + ') scale(1)');
@@ -179,11 +185,22 @@ retrieve_plot_data(function(data) {
         var t = d3.transition()
             .duration(750);
 
+
+
+        var zoom = d3.zoom()
+            .extent([[0, 0], [width, height]])
+            .scaleExtent([1, 5])
+            .translateExtent([[0, 0], [width, height]])
+            .on("zoom", zoomed);
+
+
+        zoom.transform(points_g, d3.zoomIdentity);
+
         var bubble = points_g.selectAll(".bubble")
             .data(filteredDataNew);
 
-        bubble.on("click", function() {
-            alert("hi")
+        bubble.on("click", function(d) {
+            // alert(d.registration)
         });
 
 
@@ -237,23 +254,43 @@ retrieve_plot_data(function(data) {
                 }
             })
             .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
-            .attr('height', 1.5);
+            .attr('height', 1.5)
+           ;
 
 
         setTimeout(function(){
             svg.selectAll(".bubble").style("opacity", 1)
         }, 500);
 
-        points_g.selectAll(".bubble").on("click", function() {
-            alert("hi")
+        points_g.selectAll(".bubble").on("click", function(d) {
+            // alert(d.registration)
         });
 
 
-        var zoom = d3.zoom()
-            .extent([[0, 0], [width, height]])
-            .scaleExtent([1, 5])
-            .translateExtent([[0, 0], [width, height]])
-            .on("zoom", zoomed);
+        svg.selectAll(".bubble").attr("data-tippy-content", function(d) {
+            return "дата реєстрації: " + format(d.registration) + ", </br> дата видачі: " + format(d.completion)
+        });
+
+
+
+        
+        
+        tippy('.bubble', {
+            hideOnClick: false,
+            delay: 50,
+            arrow: true,
+            inertia: false,
+            // arrowType: 'round',
+            size: 'small',
+            duration: 500,
+            // animation: 'scale',
+            allowHTML: true,
+            trigger: "mouseenter",
+            interactive: false
+        
+        });
+
+
 
         svg.insert("rect", ".points_g")
             .attr("id", "zoom")
@@ -265,18 +302,51 @@ retrieve_plot_data(function(data) {
             .call(zoom)
         ;
 
-        // $("#zoom").on("click", function(){
-        //     console.log(this);
-        //     $(this).css("pointer-events", "none")
-        // });
-        //
-        // $(window).on("mousewheel", function(){
-        //     $("#zoom").css("pointer-events", "all")
-        // });
+
+
+        var swoopy = d3.swoopyDrag()
+            .x(function(d){
+
+                return xScale(parseDate(d.sepalWidth))})
+            .y(function(d){
+
+                return yScale(d.sepalLength)})
+            .draggable(true)
+            .annotations(annotations);
+
+        var swoopySel = svg.append('g')
+            .attr("fill", "none")
+            .call(swoopy);
+
+        swoopySel.selectAll("path")
+            .each(function(d) {
+                d3.select(this)
+                    .attr("stroke", function(d) {
+                        return d.fill;
+                    })
+
+            });
+
+        swoopySel.selectAll('text')
+            .each(function(d){
+                     d3.select(this)
+                        .text('')
+                        .attr("class", "wrappedText")
+                        .attr("stroke", "none")
+                        .attr("fill", function(d) {
+                            return d.fill;
+                        })
+                        .attr("font-size", function(d) {
+                            return d.size;
+                        })
+                        .tspans(d3.wordwrap(d.text, d.wrap, d.betweenBig)); //wrap after 20 char
+
+            });
+
+
+
 
         function zoomed() {
-
-            console.log(d3.event.transform)
             var cZ =  d3.event.transform.k;
             if(cZ < 2.5){
                 xAxis.tickFormat(d3.timeFormat("%b"))
@@ -440,3 +510,24 @@ retrieve_plot_data(function(data) {
     });
 
 });
+
+
+var annotations = [
+    {
+        "sepalWidth": "2017-01-5",
+        "sepalLength": 2,
+        "path": "",
+        "wrap": 20,
+        "text": "Одна точка - одне звернення. Наведіть мишею на точки, аби побачити деталі. Графік масштабується колесиком миші",
+        "fill":"#a8a8a8",
+        "size":"12px",
+        // "bigScreenSize":"10px",
+        "marker":"no",
+        "betweenBig": 15,
+        "textOffset": [
+            72,-426
+        ]
+    }
+];
+
+$(".bubble").off('click'); //disables click event
