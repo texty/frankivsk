@@ -46,9 +46,12 @@ var svg = d3.select("svg"),
 var margin = {top: 10, right: (0.1 * width), bottom: (0.1 * width), left: 40};
 
 var points_g = svg.append("g")
-    .attr('transform', 'translate(' + margin.left + ',' + (margin.top + 15) + ')')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
     .attr("clip-path", "url(#clip)")
-    .classed("points_g", true);
+    .classed("points_g", true)
+    .append("g")
+    ;
+
 
 svg.append("defs").append("clipPath")
     .attr("id", "clip")
@@ -149,9 +152,10 @@ retrieve_plot_data(function(data) {
     function update(selected) {
 
         // $("#scatter").find("svg").empty();
+        xAxis.tickFormat(d3.timeFormat("%b"))
 
         //reset zoom
-        points_g.attr("transform", 'translate(' + margin.left + ',' + 12  + ') scale(1)');
+        // points_g.attr("transform", 'translate(' + margin.left + ',' + 12  + ') scale(1)');
 
 
         //get new Data
@@ -270,61 +274,70 @@ retrieve_plot_data(function(data) {
         //     $("#zoom").css("pointer-events", "all")
         // });
 
-        // function zoomed() {
-        //     var cZ =  d3.event.transform.k;
-        //     console.log(cZ);
-        //
-        //     if(cZ < 2.5){
-        //         xAxis.tickFormat(d3.timeFormat("%b"))
-        //     } else if (cZ >=2.5 && cZ < 6 ){
-        //         xAxis.tickFormat(d3.timeFormat("%a %d"))
-        //     } else {
-        //         xAxis.tickFormat(d3.timeFormat("%d.%m"))
-        //     }
-        // //
-        //
-        //     gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
-        //     gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
-        //
-        //
-        //     points_g.attr("transform", d3.event.transform);
-        //
-        // }
-
-
         function zoomed() {
 
+            console.log(d3.event.transform)
             var cZ =  d3.event.transform.k;
-            console.log(cZ);
-
             if(cZ < 2.5){
                 xAxis.tickFormat(d3.timeFormat("%b"))
             } else if (cZ >=2.5 && cZ < 6 ){
-                xAxis.tickFormat(d3.timeFormat("%d.%m"))
+                xAxis.tickFormat(d3.timeFormat("%a %d"))
             } else {
                 xAxis.tickFormat(d3.timeFormat("%d.%m"))
             }
+        //
 
-            var new_xScale = d3.event.transform.rescaleX(xScale);
-            var new_yScale = d3.event.transform.rescaleY(yScale);
+            gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
+            gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
 
-            gX.call(xAxis.scale(new_xScale));
-            gY.call(yAxis.scale(new_yScale));
 
-            var oneDay = 24 * 60 * 60 * 1000;
-            var daysAmount = Math.abs(new_xScale.domain()[0] - new_xScale.domain()[1]) / oneDay;
+            // var e = d3.event.transform;
+            // var tx = Math.min(0, Math.max(e.translate[0], width - width*e.scale));
+            // var ty = Math.min(0, Math.max(e.translate[1], height - height*e.scale));
+            // zoom.translate([tx,ty]);
+            //
+            // points_g.selectAll('.bubble').attr('transform', 'translate(' + [tx,ty] + ')scale(' + e.scale + ')');
 
-            var bubbleZ = points_g.selectAll(".bubble");
-            bubbleZ.attr('width', (width / daysAmount) / 1.5)
-                .attr('height', (width / daysAmount) / 1.5)
-                .attr('x', function (d) {
-                    return new_xScale(d.registration);
-                })
-                .attr('y', function (d) {
-                    return new_yScale(d.counterTotal);
-                });
+            var transform = d3.event.transform;
+            points_g
+                   .attr("transform", d3.event.transform);
+
         }
 
+
+    //     function zoomed() {
+    //
+    //         var cZ =  d3.event.transform.k;
+    //         console.log(cZ);
+    //
+    //         if(cZ < 2.5){
+    //             xAxis.tickFormat(d3.timeFormat("%b"))
+    //         } else if (cZ >=2.5 && cZ < 6 ){
+    //             xAxis.tickFormat(d3.timeFormat("%d.%m"))
+    //         } else {
+    //             xAxis.tickFormat(d3.timeFormat("%d.%m"))
+    //         }
+    //
+    //         var new_xScale = d3.event.transform.rescaleX(xScale);
+    //         var new_yScale = d3.event.transform.rescaleY(yScale);
+    //
+    //         gX.call(xAxis.scale(new_xScale));
+    //         gY.call(yAxis.scale(new_yScale));
+    //
+    //         var oneDay = 24 * 60 * 60 * 1000;
+    //         var daysAmount = Math.abs(new_xScale.domain()[0] - new_xScale.domain()[1]) / oneDay;
+    //
+    //         var bubbleZ = points_g.selectAll(".bubble");
+    //         bubbleZ.attr('width', (width / daysAmount) / 1.5)
+    //             .attr('height', (width / daysAmount) / 1.5)
+    //             .attr('x', function (d) {
+    //                 return new_xScale(d.registration);
+    //             })
+    //             .attr('y', function (d) {
+    //                 return new_yScale(d.counterTotal);
+    //             });
+    //     }
+    //
     }
 
 
