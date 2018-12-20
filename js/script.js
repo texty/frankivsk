@@ -43,7 +43,7 @@ var color = d3.scaleOrdinal() // D3 Version 4
 
 var selected =  "Реєстрація місця проживання/перебування";
 
-var svg = d3.select("svg"),
+var svg = d3.select("#scatter svg"),
     width =  0.9 * ww,
     height = 0.8 * hh;
 
@@ -422,9 +422,10 @@ retrieve_plot_data(function(data) {
         data.forEach(function (d) {
             d.Freq = +d.Freq;
         });
+
         data.sort(function(a, b){ return b.Freq - a.Freq});
 
-        data = data.filter(function(d) {
+        var popular = data.filter(function(d) {
             return d.Freq > 100
         });
 
@@ -437,7 +438,7 @@ retrieve_plot_data(function(data) {
             .append("tbody");
 
         var rows = tbody.selectAll("tr")
-            .data(data)
+            .data(popular)
             .enter()
             // .append("table")
             .append("tr");
@@ -461,6 +462,40 @@ retrieve_plot_data(function(data) {
                 update(selectedNew);
                 $("#scatterHeader h2").text(selectedNew);
             });
+
+
+        var unpopular = data.filter(function(d) {
+            return d.Freq <= 100
+        });
+
+
+        var table2 = d3.select("#unpopular-services")
+            .style("height", "50vh")
+            .style("overflow-y", 'auto');
+
+
+        var tbody2 = table2
+            .append("tbody");
+
+        var rows2 = tbody2.selectAll("tr")
+            .data(unpopular)
+            .enter()
+            // .append("table")
+            .append("tr");
+
+        rows2.append("td")
+            .text(function (d) {
+                return d.Var1
+            })
+
+
+        rows2.append("td")
+            .text(function (d) {
+                return d.Freq
+            });
+
+        
+
 
     });
 

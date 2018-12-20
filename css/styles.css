@@ -23,6 +23,8 @@ body {
     border-width: 0;
     padding: 2px;
     color: #707070; }
+  #tableHeader #unpopular {
+    cursor: pointer; }
 
 #scatterHeader {
   grid-column: 2/3;
@@ -56,7 +58,7 @@ body {
 #table {
   grid-row: 2/3;
   grid-column: 1/2;
-  max-height: 75vh;
+  max-height: 70vh;
   overflow-y: auto;
   direction: rtl; }
   @media only screen and (max-width: 825px) and (orientation: portrait) {
@@ -66,19 +68,32 @@ body {
       margin-left: calc(0.1 * 80vw);
       margin-right: calc(0.1 * 100vw);
       direction: ltr; } }
+  #table table {
+    direction: rtl; }
+  #table td {
+    padding-bottom: 20px;
+    font-size: 13px;
+    color: #a8a8a8;
+    cursor: pointer; }
 
-table {
-  direction: rtl; }
-
-#legend {
-  display: flex;
-  fill: #484d60; }
-
-td {
+#unpopular-services table {
+  width: 50%;
+  margin: 50px auto;
+  padding: 50px; }
+#unpopular-services td {
   padding-bottom: 20px;
   font-size: 13px;
   color: #a8a8a8;
   cursor: pointer; }
+#unpopular-services td:nth-child(1) {
+  padding-right: 30px; }
+#unpopular-services td:nth-child(2) {
+  text-align: center;
+  width: 20%; }
+
+#legend {
+  display: flex;
+  fill: #484d60; }
 
 g.tick text {
   fill: #cccccc; }
@@ -103,5 +118,49 @@ path.domain {
 
 .wrappedText {
   margin-bottom: 10px; }
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */ }
+
+/* Modal Content */
+.modal-content {
+  background-color: #484d60;
+  margin: auto;
+  padding: 20px;
+  width: 60%; }
+
+/* The Close Button */
+.close {
+  position: sticky;
+  top: 0;
+  right: 10px;
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold; }
+
+.close:hover,
+.close:focus {
+  color: white;
+  text-decoration: none;
+  cursor: pointer; }
 
 /*# sourceMappingURL=styles.css.map */
