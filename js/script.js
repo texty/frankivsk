@@ -95,7 +95,10 @@ retrieve_plot_data(function(data) {
     points.enter()
         .append('rect')
         .attr('class', 'bubble')
-                .style('opacity', 0);
+        .style('opacity', 0)
+        .attr("data-tippy-content", function(d) {
+            return "дата реєстрації: " + format(d.registration) + ", <br> встановлений термін: " + d.term + " дн. <br>  дата видачі: " + format(d.completion) + ", " + d.id + ", " + d.service
+        });
 
 
     // svg.selectAll(".bubble")
@@ -152,6 +155,41 @@ retrieve_plot_data(function(data) {
             .call(yAxis)
         ;
 
+    var zoom = d3.zoom()
+        .extent([[0, 0], [width, height]])
+        .scaleExtent([1, 5])
+        .translateExtent([[0, 0], [width, height]])
+        .on("zoom", zoomed);
+
+
+    svg.insert("rect", ".points_g")
+        .attr("id", "zoom")
+        .attr("width", width)
+        .attr("height", height)
+        .style("fill", "none")
+        .style("pointer-events", "all")
+        .attr('transform', 'translate(' + margin.left + ',' + (margin.top + 10) + ')')
+        .call(zoom)
+    ;
+
+
+    function zoomed() {
+        var cZ =  d3.event.transform.k;
+        if(cZ < 2.5){
+            xAxis.tickFormat(d3.timeFormat("%b"))
+        } else if (cZ >=2.5 && cZ < 6 ){
+            xAxis.tickFormat(d3.timeFormat("%a %d"))
+        } else {
+            xAxis.tickFormat(d3.timeFormat("%d.%m"))
+        }
+
+        gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
+        gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
+
+        var transform = d3.event.transform;
+        points_g.attr("transform", d3.event.transform);
+    }
+
     //DRAW SCATTER PLOT
     function update(selected) {
 
@@ -186,13 +224,14 @@ retrieve_plot_data(function(data) {
             .duration(750);
 
 
+        zoom.extent([[0, 0], [width, height]])
+            .translateExtent([[0, 0], [width, height]]);
 
-        var zoom = d3.zoom()
-            .extent([[0, 0], [width, height]])
-            .scaleExtent([1, 5])
-            .translateExtent([[0, 0], [width, height]])
-            .on("zoom", zoomed);
 
+        svg.select("#zoom")
+            .attr("width", width)
+            .attr("height", height)
+            .attr('transform', 'translate(' + margin.left + ',' + (margin.top + 10) + ')');
 
         zoom.transform(points_g, d3.zoomIdentity);
 
@@ -214,7 +253,10 @@ retrieve_plot_data(function(data) {
             .transition(t)
             .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
             .attr('height', 1.5)
-            .attr('x', function (d) {             
+            .attr("data-tippy-content", function(d) {
+                return "дата реєстрації: " + format(d.registration) + ", <br> встановлений термін: " + d.term + " дн. <br>  дата видачі: " + format(d.completion)
+            })
+            .attr('x', function (d) {
                 return xScale(d.registration);
             })
             .attr('y', function (d) {
@@ -227,8 +269,9 @@ retrieve_plot_data(function(data) {
                     return "#E01A25"
                 }
             })
+            ;
 
-        ;
+
 
 
         // ENTER
@@ -238,8 +281,6 @@ retrieve_plot_data(function(data) {
             .attr("class", "bubble")
             .style("opacity", 0)
             .transition()
-            // .duration(500)
-
             .attr('x', function (d) {
                 return xScale(d.registration);
             })
@@ -255,7 +296,10 @@ retrieve_plot_data(function(data) {
             })
             .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
             .attr('height', 1.5)
-           ;
+            .attr("data-tippy-content", function(d) {
+                return "дата реєстрації: " + format(d.registration) + ", <br> встановлений термін: " + d.term + " дн. <br>  дата видачі: " + format(d.completion)
+            });
+
 
 
         setTimeout(function(){
@@ -263,44 +307,30 @@ retrieve_plot_data(function(data) {
         }, 500);
 
         points_g.selectAll(".bubble").on("click", function(d) {
-            // alert(d.registration)
         });
 
-
-        svg.selectAll(".bubble").attr("data-tippy-content", function(d) {
-            return "дата реєстрації: " + format(d.registration) + ", </br> дата видачі: " + format(d.completion)
-        });
-
-
-
-        
         
         tippy('.bubble', {
             hideOnClick: false,
             delay: 50,
             arrow: true,
-            inertia: false,
-            // arrowType: 'round',
+            inertia: true,
             size: 'small',
             duration: 500,
-            // animation: 'scale',
             allowHTML: true,
             trigger: "mouseenter",
-            interactive: false
+            interactive: true,
+            onShow(tip) {
+                tip.setContent(tip.reference.getAttribute('data-tippy-content'))
+            }
         
         });
 
 
 
-        svg.insert("rect", ".points_g")
-            .attr("id", "zoom")
-            .attr("width", width)
-            .attr("height", height)
-            .style("fill", "none")
-            .style("pointer-events", "all")
-            .attr('transform', 'translate(' + margin.left + ',' + (margin.top + 10) + ')')
-            .call(zoom)
-        ;
+
+
+
 
 
 
@@ -332,6 +362,7 @@ retrieve_plot_data(function(data) {
                      d3.select(this)
                         .text('')
                         .attr("class", "wrappedText")
+                         .style("font-weight", 400)
                         .attr("stroke", "none")
                         .attr("fill", function(d) {
                             return d.fill;
@@ -346,33 +377,7 @@ retrieve_plot_data(function(data) {
 
 
 
-        function zoomed() {
-            var cZ =  d3.event.transform.k;
-            if(cZ < 2.5){
-                xAxis.tickFormat(d3.timeFormat("%b"))
-            } else if (cZ >=2.5 && cZ < 6 ){
-                xAxis.tickFormat(d3.timeFormat("%a %d"))
-            } else {
-                xAxis.tickFormat(d3.timeFormat("%d.%m"))
-            }
-        //
 
-            gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
-            gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
-
-
-            // var e = d3.event.transform;
-            // var tx = Math.min(0, Math.max(e.translate[0], width - width*e.scale));
-            // var ty = Math.min(0, Math.max(e.translate[1], height - height*e.scale));
-            // zoom.translate([tx,ty]);
-            //
-            // points_g.selectAll('.bubble').attr('transform', 'translate(' + [tx,ty] + ')scale(' + e.scale + ')');
-
-            var transform = d3.event.transform;
-            points_g
-                   .attr("transform", d3.event.transform);
-
-        }
 
 
     //     function zoomed() {
