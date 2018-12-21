@@ -101,15 +101,6 @@ retrieve_plot_data(function(data) {
         });
 
 
-    // svg.selectAll(".bubble")
-    //     .on("mousedown", function() {
-    //         d3.event.stopImmediatePropagation();
-    //     });
-
-
-    // points.on("click", function(d){ alert("hi")  });
-
-    // d3.selectAll("path.domain").remove();
 
     var lG = svg.append("g")
         .attr("id", "legend")
