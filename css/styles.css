@@ -52,13 +52,14 @@ body {
       height: 50vh; } }
 
 .bubble {
+  opacity: 0.8;
   fill: #484d60;
   outline: none; }
 
 #table {
   grid-row: 2/3;
   grid-column: 1/2;
-  max-height: 70vh;
+  max-height: 65vh;
   overflow-y: auto;
   direction: rtl; }
   @media only screen and (max-width: 825px) and (orientation: portrait) {

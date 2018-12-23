@@ -31,20 +31,19 @@ function retrieve_plot_data(cb) {
 }
 
 
+
+var viewBox = $("#scatter")[0].getBoundingClientRect(),
+    ww = viewBox.width,
+    hh = viewBox.height;
+
+
 var color = d3.scaleOrdinal() // D3 Version 4
     .domain(["вчасно", "затримка", "раніше", "відмовлено"])
     .range(["#cccccc", "#E58903", "#7EB852", "red"]);
 
-var selected =  "Реєстрація місця проживання/перебування";
-
-
-var viewBox = $("#scatter")[0].getBoundingClientRect(),
-    width = viewBox.width * 0.9,
-    height = viewBox.height * 0.8;
-
-
-var svg = d3.select("#scatter svg");
-    
+var svg = d3.select("#scatter svg"),
+    width =  0.9 * ww,
+    height = 0.8 * hh;
 
 var margin = {top: 10, right: (0.1 * width), bottom: (0.1 * width), left: 40};
 
@@ -87,7 +86,7 @@ var yAxis = d3.axisLeft(yScale);
 retrieve_plot_data(function(data) {
 
     var filteredData = data.filter(function (d) {
-        return d.service === selected
+        return d.service === ""
     });
 
     var points = points_g.selectAll("circle").data(filteredData);
@@ -221,7 +220,9 @@ retrieve_plot_data(function(data) {
         });
 
     //DRAW SCATTER PLOT
-    function update(selected) {
+    function update(dataForChart) {
+
+       $(".points_g").find("g").empty();
 
         swoopy.x(function(d){
             return xScale(parseDate(d.sepalWidth))})
@@ -229,12 +230,6 @@ retrieve_plot_data(function(data) {
                 return yScale(d.sepalLength)});
 
         xAxis.tickFormat(d3.timeFormat("%b"));
-
-
-        //get new Data
-        var filteredDataNew = data.filter(function (d) {
-            return d.service === selected
-        });
 
 
         //get new w/h
@@ -264,44 +259,8 @@ retrieve_plot_data(function(data) {
 
         zoom.transform(points_g, d3.zoomIdentity);
 
-        var bubble = points_g.selectAll(".bubble")
-            .data(filteredDataNew);
-
-
-
-        // EXIT
-        bubble.exit()
-            .transition(t)
-            .remove();
-
-        // UPDATE
-        bubble
-            .transition(t)
-            .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
-            .attr('height', 1.5)
-            .attr("data-tippy-content", function(d) {
-                return "дата реєстрації: " + format(d.registration) + ", <br> встановлений термін: " + d.term + " дн. <br>  дата видачі: " + format(d.completion)
-            })
-            .attr('x', function (d) {
-                return xScale(d.registration);
-            })
-            .attr('y', function (d) {
-                return yScale(d.counterTotal);
-            })
-            .style('fill', function (d) {
-                if (d.stan != "В наданні послуги відмовллено") {
-                    return color(d.color);
-                } else {
-                    return "#E01A25"
-                }
-            })
-        ;
-
-
-
-
-        // ENTER
-        bubble
+        var bubble = points_g.selectAll("circle")
+            .data(dataForChart)
             .enter()
             .append("rect")
             .attr("class", "bubble")
@@ -322,14 +281,15 @@ retrieve_plot_data(function(data) {
             })
             .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
             .attr('height', 1.5)
-            .attr("data-tippy-content", function(d) {
-                return "дата реєстрації: " + format(d.registration) + ", <br> встановлений термін: " + d.term + " дн. <br>  дата видачі: " + format(d.completion)
-            });
+        // .attr("data-tippy-content", function(d) {
+        //     return "дата реєстрації: " + format(d.registration) + ", <br> встановлений термін: " + d.term + " дн. <br>  дата видачі: " + format(d.completion)
+        // })
+        ;
 
 
-        setTimeout(function(){
-            svg.selectAll(".bubble").style("opacity", 1)
-        }, 500);
+        // setTimeout(function(){
+        svg.selectAll(".bubble").style("opacity", 1);
+        // }, 500);
 
 
 
@@ -398,8 +358,13 @@ retrieve_plot_data(function(data) {
 
     });
 
+    var selected =  "Реєстрація місця проживання/перебування";
 
-    update(selected);
+
+    var firstData = data.filter(function (d) {
+        return d.service === selected
+    });
+    update(firstData);
 
 
 
@@ -408,14 +373,14 @@ retrieve_plot_data(function(data) {
 
     //draw TABLE
 
-    d3.csv('data/services.csv', function (data) {
-        data.forEach(function (d) {
+    d3.csv('data/services.csv', function (tabledata) {
+        tabledata.forEach(function (d) {
             d.Freq = +d.Freq;
         });
 
-        data.sort(function(a, b){ return b.Freq - a.Freq});
+        tabledata.sort(function(a, b){ return b.Freq - a.Freq});
 
-        var popular = data.filter(function(d) {
+        var popular = tabledata.filter(function(d) {
             return d.Freq > 100
         });
 
@@ -449,12 +414,23 @@ retrieve_plot_data(function(data) {
                 $('td').css("color", "#a8a8a8");
                 $(this).css("font-weight", 800);
                 $(this).css("color", "#a8a8a8");
-                update(selectedNew);
+                if(selectedNew === "Реєстрація місця проживання/перебування") {
+                    console.log(selectedNew === "Реєстрація місця проживання/перебування");
+                    update(firstData);
+                } else {
+                    var firstDataNew = data.filter(function (d) {
+                        return d.service === selectedNew
+                    });
+
+                    update(firstDataNew);
+                }
+
+
                 $("#scatterHeader h2").text(selectedNew);
             });
 
 
-        var unpopular = data.filter(function(d) {
+        var unpopular = tabledata.filter(function(d) {
             return d.Freq <= 100
         });
 
