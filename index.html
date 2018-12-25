@@ -30,6 +30,18 @@
 
 <div id="content">
 
+    <div id="typeFilter">
+        <form>
+            <input type="radio" name="vehicle" value="Фізична особа"> Фізособи
+            <input type="radio" name="vehicle" value="Юридична особа"> Юрособи
+            <input type="radio" name="vehicle" value="Фізична особа - підприємець"> ФОП
+            <input type="radio" checked name="vehicle" value=""> все
+        </form>
+
+
+
+    </div>
+
     <div id="scatterHeader">
         <div>
             <h2>Реєстрація місця проживання/перебування</h2>
@@ -45,12 +57,14 @@
 
     <div id="tableHeader">
         <div>
-            <button id="popular">Популярні сервіси</button>
-            <button id="unpopular">Непопулярні</button>
+            <!--<button id="popular">Популярні сервіси</button>-->
+            <button id="unpopular">Послуги з менше 100 звернень на рік</button>
         </div>
     </div>
 
     <div id="table"></div>
+
+
 
 </div>
 

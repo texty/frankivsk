@@ -1,12 +1,14 @@
 body {
   font-family: 'Roboto Mono', monospace;
   background-color: #484d60;
-  overflow-y: hidden; }
+  overflow-y: hidden;
+  color: #a8a8a8;
+  font-size: 13px; }
 
 #content {
   display: grid;
   grid-template-columns: 250px auto;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto;
   grid-gap: 10px; }
   @media only screen and (max-width: 825px) and (orientation: portrait) {
     #content {
@@ -41,6 +43,16 @@ body {
     font-size: 16px;
     -webkit-margin-before: 0;
     -webkit-margin-after: 0; }
+
+#typeFilter {
+  position: absolute;
+  bottom: 10px;
+  right: 100px;
+  z-index: 1000; }
+  #typeFilter input[type="radio"] {
+    margin-left: 30px;
+    color: #a8a8a8;
+    font-size: 11px; }
 
 #scatter {
   position: relative;

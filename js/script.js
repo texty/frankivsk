@@ -163,7 +163,7 @@ retrieve_plot_data(function(data) {
         var cZ =  d3.event.transform.k;
         if(cZ < 2.5){
             xAxis.tickFormat(d3.timeFormat("%b"))
-        } else if (cZ >=2.5 && cZ < 6 ){
+        } else if (cZ >=2.5 && cZ < 4 ){
             xAxis.tickFormat(d3.timeFormat("%a %d"))
         } else {
             xAxis.tickFormat(d3.timeFormat("%d.%m"))
@@ -217,7 +217,7 @@ retrieve_plot_data(function(data) {
         });
 
     //DRAW SCATTER PLOT
-    function update(dataForChart) {
+    function update(dataForChart, counter) {
 
        // swoopy.x(function(d){
        //          return xScale(parseDate(d.sepalWidth))})
@@ -270,7 +270,7 @@ retrieve_plot_data(function(data) {
                 return xScale(d.registration);
             })
             .attr('y', function (d) {
-                return yScale(d.counterTotal);
+                return yScale(d[counter]);
             })
             .style('fill', function (d) {
                 if (d.stan != "В наданні послуги відмовллено") {
@@ -295,7 +295,7 @@ retrieve_plot_data(function(data) {
                 return xScale(d.registration);
             })
             .attr('y', function (d) {
-                return yScale(d.counterTotal);
+                return yScale(d[counter]);
             })
             .style('fill', function (d) {
                 return color(d.color);
@@ -382,11 +382,11 @@ retrieve_plot_data(function(data) {
     var firstData = data.filter(function (d) {
         return d.service === selected
     });
-    update(firstData);
+    update(firstData, "counterTotal");
 
 
 
-
+    var selectedNew = "Реєстрація місця проживання/перебування";
 
 
     //draw TABLE
@@ -427,21 +427,33 @@ retrieve_plot_data(function(data) {
                 return d.Var1
             })
             .on("click", function(d){
-                var selectedNew = d.Var1;
+                selectedNew = d.Var1;
+                var type = $('input[name=vehicle]:checked').val();
                 $('td').css("font-weight", 400);
                 $('td').css("color", "#a8a8a8");
                 $(this).css("font-weight", 800);
                 $(this).css("color", "#a8a8a8");
-                if(selectedNew === "Реєстрація місця проживання/перебування") {
-                    console.log(selectedNew === "Реєстрація місця проживання/перебування");
-                    update(firstData);
+                if(type === "") {
+                    if (selectedNew === "Реєстрація місця проживання/перебування") {
+                        update(firstData, "counterTotal");
+                    } else {
+                        var firstDataNew = data.filter(function (d) {
+                            return d.service === selectedNew
+                        });
+
+                        update(firstDataNew, "counterTotal");
+                    }
                 } else {
                     var firstDataNew = data.filter(function (d) {
-                        return d.service === selectedNew
+                        return d.service === selectedNew && d.type === type
                     });
 
-                    update(firstDataNew);
+                    update(firstDataNew, "counterByType");
+
                 }
+
+
+
 
 
                 $("#scatterHeader h2").text(selectedNew);
@@ -483,6 +495,32 @@ retrieve_plot_data(function(data) {
 
     });
 
+    $('input[type=radio][name=vehicle]').on('change', function() {
+        var type = $('input[name=vehicle]:checked').val();
+        if(type === "") {
+            if (selectedNew === "Реєстрація місця проживання/перебування") {
+                update(firstData, "counterTotal");
+            } else {
+                var firstDataNew = data.filter(function (d) {
+                    return d.service === selectedNew
+                });
+
+                update(firstDataNew, "counterTotal");
+            }
+        } else {
+            var firstDataNew = data.filter(function (d) {
+                return d.service === selectedNew && d.type === type
+            });
+
+            update(firstDataNew, "counterByType");
+
+        }
+
+
+    });
+
+
+
 });
 
 
@@ -492,7 +530,7 @@ var annotations = [
         "sepalLength": 50,
         "path": "",
         "wrap": 20,
-        "text": "Одна точка - одне звернення. Наведіть мишею на точки, аби побачити деталі. Графік масштабується колесиком миші",
+        "text": "Одна точка - одне звернення. Графік масштабується колесиком миші",
         "fill":"#a8a8a8",
         "size":"12px",
         // "bigScreenSize":"10px",
