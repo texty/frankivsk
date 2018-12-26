@@ -49,6 +49,17 @@ body {
   bottom: 10px;
   right: 100px;
   z-index: 1000; }
+  @media (max-width: 900px) and (orientation: landscape) {
+    #typeFilter {
+      position: relative;
+      grid-row: 3/4;
+      grid-column: 2/3;
+      text-align: right; } }
+  @media (max-width: 800px) and (orientation: portrait) {
+    #typeFilter {
+      position: relative;
+      text-align: right;
+      right: 10px; } }
   #typeFilter input[type="radio"] {
     margin-left: 30px;
     color: #a8a8a8;
