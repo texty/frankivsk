@@ -13,6 +13,9 @@ body {
   @media only screen and (max-width: 825px) and (orientation: portrait) {
     #content {
       display: block; } }
+  @media only screen and (width: 1024px) and (height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+    #content {
+      display: block; } }
 
 #tableHeader {
   grid-column: 1/2;
@@ -43,6 +46,10 @@ body {
     font-size: 16px;
     -webkit-margin-before: 0;
     -webkit-margin-after: 0; }
+    @media only screen and (width: 1024px) and (height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+      #scatterHeader h2 {
+        font-weight: 400;
+        font-size: 22px; } }
 
 #typeFilter {
   position: absolute;
@@ -60,6 +67,12 @@ body {
       position: relative;
       text-align: right;
       right: 10px; } }
+  @media only screen and (width: 1024px) and (height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+    #typeFilter {
+      position: relative;
+      text-align: right;
+      right: 10px;
+      margin-bottom: 50px; } }
   #typeFilter input[type="radio"] {
     margin-left: 30px;
     color: #a8a8a8;
@@ -73,6 +86,9 @@ body {
   @media only screen and (max-width: 825px) and (orientation: portrait) {
     #scatter {
       height: 50vh; } }
+  @media only screen and (width: 1024px) and (height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+    #scatter {
+      height: 50vh; } }
 
 .bubble {
   opacity: 0.8;
@@ -82,10 +98,17 @@ body {
 #table {
   grid-row: 2/3;
   grid-column: 1/2;
-  max-height: 65vh;
+  max-height: 72vh;
   overflow-y: auto;
   direction: rtl; }
   @media only screen and (max-width: 825px) and (orientation: portrait) {
+    #table {
+      width: auto;
+      margin-top: 30px;
+      margin-left: calc(0.1 * 80vw);
+      margin-right: calc(0.1 * 100vw);
+      direction: ltr; } }
+  @media only screen and (width: 1024px) and (height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
     #table {
       width: auto;
       margin-top: 30px;

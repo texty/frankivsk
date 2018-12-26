@@ -42,10 +42,10 @@ var color = d3.scaleOrdinal() // D3 Version 4
     .range(["#cccccc", "#E58903", "#7EB852", "red"]);
 
 var svg = d3.select("#scatter svg"),
-    width =  0.9 * ww,
-    height = 0.8 * hh;
+    width =  0.95 * ww,
+    height = 0.90 * hh;
 
-var margin = {top: 10, right: (0.1 * width), bottom: 20, left: 40};
+var margin = {top: 0, right: 40, bottom: 0, left: 40};
 
 var points_g = svg.append("g")
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
