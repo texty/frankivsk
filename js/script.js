@@ -45,7 +45,7 @@ var svg = d3.select("#scatter svg"),
     width =  0.9 * ww,
     height = 0.8 * hh;
 
-var margin = {top: 10, right: (0.1 * width), bottom: (0.1 * width), left: 40};
+var margin = {top: 10, right: (0.1 * width), bottom: 20, left: 40};
 
 var points_g = svg.append("g")
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
@@ -62,8 +62,10 @@ svg.append("defs").append("clipPath")
     .attr("height", height);
 
 
-var xScale = fc.scaleDiscontinuous(d3.scaleTime())
-        .discontinuityProvider(fc.discontinuitySkipWeekends());
+// var xScale = fc.scaleDiscontinuous(d3.scaleTime())
+//         .discontinuityProvider(fc.discontinuitySkipWeekends());
+
+var xScale = d3.scaleTime();
 
 
 xScale.domain([parseDate("2017-01-01"), parseDate("2017-12-31")])
@@ -142,7 +144,7 @@ retrieve_plot_data(function(data) {
 
     var zoom = d3.zoom()
         .extent([[0, 0], [width, height]])
-        .scaleExtent([1, 5])
+        .scaleExtent([1, 10])
         .translateExtent([[0, 0], [width, height]])
         .on("zoom", zoomed);
 
@@ -183,7 +185,7 @@ retrieve_plot_data(function(data) {
             return xScale(parseDate(d.sepalWidth))})
         .y(function(d){
             return yScale(+d.sepalLength)})
-        .draggable(true)
+        .draggable(false)
         .annotations(annotations);
 
     var swoopySel = svg.append('g')
@@ -307,7 +309,9 @@ retrieve_plot_data(function(data) {
 
 
 
-            // svg.selectAll(".bubble").style("opacity", 0.8);
+            svg.selectAll(".bubble").on("click", function(d) {
+                console.log(d)
+            });
 
 
 
@@ -338,8 +342,10 @@ retrieve_plot_data(function(data) {
         var width =  0.9 * ww,
             height = 0.8 * hh;
 
-        var xScale = fc.scaleDiscontinuous(d3.scaleTime())
-            .discontinuityProvider(fc.discontinuitySkipWeekends());
+        // var xScale = fc.scaleDiscontinuous(d3.scaleTime())
+        //     .discontinuityProvider(fc.discontinuitySkipWeekends());
+
+        var xScale = d3.scaleTime();
 
         xScale.domain([parseDate("2017-01-01"), parseDate("2017-12-31")])
             .range([0, width]);
