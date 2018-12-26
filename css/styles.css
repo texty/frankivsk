@@ -53,7 +53,7 @@ body {
 
 #typeFilter {
   position: absolute;
-  bottom: 10px;
+  bottom: 2px;
   right: 100px;
   z-index: 1000; }
   @media (max-width: 900px) and (orientation: landscape) {
@@ -122,6 +122,13 @@ body {
     font-size: 13px;
     color: #a8a8a8;
     cursor: pointer; }
+  #table td:nth-child(2) {
+    padding-right: 10px; }
+  #table th {
+    padding-bottom: 20px; }
+  #table th:nth-child(2) {
+    text-align: right;
+    padding-right: 10px; }
 
 #unpopular-services table {
   width: 50%;
@@ -172,7 +179,7 @@ path.domain {
   /* Hidden by default */
   position: fixed;
   /* Stay in place */
-  z-index: 1;
+  z-index: 2000;
   /* Sit on top */
   left: 0;
   top: 0;
