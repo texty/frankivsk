@@ -340,7 +340,7 @@ retrieve_plot_data(function(data) {
             hh = viewBox.height;
 
         var width =  0.9 * ww,
-            height = 0.8 * hh;
+            height = 0.9 * hh;
 
         // var xScale = fc.scaleDiscontinuous(d3.scaleTime())
         //     .discontinuityProvider(fc.discontinuitySkipWeekends());
