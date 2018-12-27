@@ -422,7 +422,7 @@ retrieve_plot_data(function(data) {
             .text("К-ть");
 
         hRow.append("th")
-            .text("Популярні послуги");
+            .text("Послуги");
 
 
 
