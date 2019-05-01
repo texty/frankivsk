@@ -146,7 +146,8 @@ retrieve_plot_data(function(data) {
         .extent([[0, 0], [width, height]])
         .scaleExtent([1, 10])
         .translateExtent([[0, 0], [width, height]])
-        .on("zoom", zoomed);
+        // .on("zoom", zoomed)
+        ;
 
 
     svg
@@ -158,7 +159,8 @@ retrieve_plot_data(function(data) {
         .style("fill", "none")
         .style("pointer-events", "all")
         .attr('transform', 'translate(' + margin.left + ',' + (margin.top + 10) + ')')
-        .call(zoom);
+        // .call(zoom)
+    ;
 
 
     function zoomed() {

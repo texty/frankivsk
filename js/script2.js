@@ -57,7 +57,7 @@ var points_g = svg.append("g")
 
 svg.append("defs").append("clipPath")
     .attr("id", "clip")
-    .append("rect")
+    // .append("rect")
     .attr("width", width)
     .attr("height", height);
 
@@ -144,11 +144,12 @@ retrieve_plot_data(function(data) {
             .call(yAxis)
         ;
 
-    var zoom = d3.zoom()
-        .extent([[0, 0], [width, height]])
-        .scaleExtent([1, 5])
-        .translateExtent([[0, 0], [width, height]])
-        .on("zoom", zoomed);
+    // var zoom = d3.zoom()
+    //     .extent([[0, 0], [width, height]])
+    //     .scaleExtent([1, 5])
+    //     .translateExtent([[0, 0], [width, height]])
+    //     // .on("zoom", zoomed)
+    // ;
 
 
     svg.insert("rect", ".points_g")
@@ -158,26 +159,26 @@ retrieve_plot_data(function(data) {
         .style("fill", "none")
         .style("pointer-events", "all")
         .attr('transform', 'translate(' + margin.left + ',' + (margin.top + 10) + ')')
-        .call(zoom)
+        // .call(zoom)
     ;
 
 
-    function zoomed() {
-        var cZ =  d3.event.transform.k;
-        if(cZ < 2.5){
-            xAxis.tickFormat(d3.timeFormat("%b"))
-        } else if (cZ >=2.5 && cZ < 6 ){
-            xAxis.tickFormat(d3.timeFormat("%a %d"))
-        } else {
-            xAxis.tickFormat(d3.timeFormat("%d.%m"))
-        }
-
-        gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
-        gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
-
-        var transform = d3.event.transform;
-        points_g.attr("transform", d3.event.transform);
-    }
+    // function zoomed() {
+    //     var cZ =  d3.event.transform.k;
+    //     if(cZ < 2.5){
+    //         xAxis.tickFormat(d3.timeFormat("%b"))
+    //     } else if (cZ >=2.5 && cZ < 6 ){
+    //         xAxis.tickFormat(d3.timeFormat("%a %d"))
+    //     } else {
+    //         xAxis.tickFormat(d3.timeFormat("%d.%m"))
+    //     }
+    //
+    //     gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
+    //     gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
+    //
+    //     var transform = d3.event.transform;
+    //     points_g.attr("transform", d3.event.transform);
+    // }
 
 
 
