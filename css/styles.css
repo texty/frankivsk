@@ -4,6 +4,20 @@ body {
   color: #a8a8a8;
   font-size: 13px; }
 
+#header {
+  height: 100vh;
+  display: flex; }
+  #header #title {
+    text-align: center;
+    margin: auto;
+    width: 70%; }
+    #header #title h1 {
+      font-size: 4vw; }
+
+#text p {
+  width: 60%;
+  margin: 20px auto; }
+
 #content {
   height: 100vh;
   display: grid;
@@ -52,9 +66,10 @@ body {
         font-size: 22px; } }
 
 #typeFilter {
-  position: absolute;
-  bottom: 2px;
-  right: 100px;
+  width: 100%;
+  grid-column: 1/-1;
+  text-align: right;
+  position: relative;
   z-index: 1000; }
   @media (max-width: 900px) and (orientation: landscape) {
     #typeFilter {

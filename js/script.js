@@ -73,10 +73,8 @@ xScale.domain([parseDate("2017-01-01"), parseDate("2017-12-31")])
 
 
 var yScale = d3.scaleLinear()
-    .domain([0, 140])
+    .domain([-10, 140])
     .range([height, 0]);
-
-
 
 var xAxis = d3.axisBottom(xScale);
 var yAxis = d3.axisLeft(yScale);
@@ -140,7 +138,7 @@ retrieve_plot_data(function(data) {
     var gY = svg.append('g')
             .attr("class", "y-axis")
             .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
-            .call(yAxis);
+        .call(yAxis);
 
     var zoom = d3.zoom()
         .extent([[0, 0], [width, height]])
@@ -157,7 +155,7 @@ retrieve_plot_data(function(data) {
         .attr("height", height)
         .style("fill", "none")
         .style("pointer-events", "all")
-        .attr('transform', 'translate(' + margin.left + ',' + (margin.top + 10) + ')')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
         .call(zoom);
 
 
@@ -166,7 +164,7 @@ retrieve_plot_data(function(data) {
         if(cZ < 2.5){
             xAxis.tickFormat(d3.timeFormat("%b"))
         } else if (cZ >=2.5 && cZ < 4 ){
-            xAxis.tickFormat(d3.timeFormat("%a %d"))
+           xAxis.tickFormat(d3.timeFormat("%a %d"))
         } else {
             xAxis.tickFormat(d3.timeFormat("%d.%m"))
         }
