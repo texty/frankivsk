@@ -5,16 +5,13 @@
 var plot_data;
 var parseDate = d3.timeParse("%Y-%m-%d");
 var format = d3.timeFormat("%d-%b-%Y");
-
 var oneDay = 24 * 60 * 60 * 1000;
-
-
 
 
 function retrieve_plot_data(cb) {
     if (plot_data) return cb(plot_data);
 
-    return d3.csv("data/data.csv", function(err, myData){
+    return d3.csv("data/data_may_06.csv", function(err, myData){
         if (err) throw err;
 
         myData.forEach(function (d) {
@@ -30,30 +27,26 @@ function retrieve_plot_data(cb) {
     })
 }
 
-
+var margin = {top: 0, right: 40, bottom: 0, left: 40};
 
 var viewBox = $("#scatter")[0].getBoundingClientRect(),
     ww = viewBox.width,
     hh = viewBox.height;
 
-
 var color = d3.scaleOrdinal() // D3 Version 4
-    .domain(["вчасно", "затримка", "раніше", "відмовлено"])
-    .range(["#cccccc", "#E58903", "#7EB852", "red"]);
+    .domain(["вчасно", "затримка", "раніше", "відмова"])
+    .range(["white", "yellow", "#8EE28A", "transparent"]);
 
 var svg = d3.select("#scatter svg"),
     width =  0.95 * ww,
     height = 0.90 * hh;
 
-var margin = {top: 10, right: 40, bottom: 0, left: 40};
-
 var points_g = svg.append("g")
-    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+    .attr('transform', 'translate(' + margin.left + ','  + 0 + ')')
     .attr("clip-path", "url(#clip)")
     .classed("points_g", true)
-    .append("g")
+    // .append("g") //костиль, аби графік не налазив на x та y, той самий ефект від svg.select
     ;
-
 
 svg.append("defs").append("clipPath")
     .attr("id", "clip")
@@ -61,56 +54,51 @@ svg.append("defs").append("clipPath")
     .attr("width", width)
     .attr("height", height);
 
-
+//шкала без вихідних, не підійшла, бо послуги надавались в суботу також
 // var xScale = fc.scaleDiscontinuous(d3.scaleTime())
 //         .discontinuityProvider(fc.discontinuitySkipWeekends());
 
 var xScale = d3.scaleTime();
 
-
 xScale.domain([parseDate("2017-01-01"), parseDate("2017-12-31")])
-       .range([0, width]);
+    .range([0, width]);
 
+var xAxis = d3
+    .axisBottom(xScale);
 
 var yScale = d3.scaleLinear()
-    .domain([0, 140])
+    .domain([0, 145])
     .range([height, 0]);
 
-
-
-var xAxis = d3.axisBottom(xScale);
-var yAxis = d3.axisLeft(yScale);
-
-
+var yAxis = d3
+    .axisLeft(yScale);
 
 
 
 retrieve_plot_data(function(data) {
-
     var filteredData = data.filter(function (d) {
         return d.service === ""
     });
 
-    var points = points_g.selectAll("circle").data(filteredData);
+    var points = points_g.selectAll("circle")
+        .data(filteredData);
+    
     points.enter()
         .append('rect')
-        .attr('class', 'bubble')
-      ;
+        .attr('class', 'bubble');
 
-
-
-    var lG = svg.append("g")
+    var legendContainer = svg.append("g")
         .attr("id", "legend")
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    lG.append("rect")
+    legendContainer.append("rect")
         .attr("fill", "rgb(72, 77, 96)")
         .attr("width", "100px")
         .attr("height", "100px")
         .attr('x', width - 100)
         .attr('y', -10);
 
-    var legend = lG.selectAll('legend')
+    var legend = legendContainer.selectAll('legend')
         .data(color.domain())
         .enter().append('g')
         .attr('class', 'legend')
@@ -121,7 +109,12 @@ retrieve_plot_data(function(data) {
         .attr('x', width -  15)
         .attr('width', 10)
         .attr('height', 10)
-        .style('fill', color);
+        .style('fill', color)
+        .style('stroke', function(d) {
+            if(d === "відмова"){
+                return "red"
+            }
+        });
 
 
     legend.append('text')
@@ -140,31 +133,29 @@ retrieve_plot_data(function(data) {
     var gY = svg.append('g')
             .attr("class", "y-axis")
             .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
-            .call(yAxis);
-
-    var zoom = d3.zoom()
-        .extent([[0, 0], [width, height]])
-        .scaleExtent([1, 10])
-        .translateExtent([[0, 0], [width, height]])
-        // .on("zoom", zoomed)
+            .call(yAxis)
         ;
 
+    var zoom = d3.zoom()
+        .extent([[10, 0], [width, height]])
+        .scaleExtent([1, 2])
+        .translateExtent([[10, 0], [width, height]])
+        .on("zoom", zoomed)
+        ;
 
-    svg
-        // .insert("rect", ".points_g")
-        .append("rect")
+    svg .append("rect")
         .attr("id", "zoom")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", window.innerWidth)
+        .attr("height", hh)
         .style("fill", "none")
         .style("pointer-events", "all")
-        .attr('transform', 'translate(' + margin.left + ',' + (margin.top + 10) + ')')
-        // .call(zoom)
+        .call(zoom)
     ;
 
 
     function zoomed() {
         var cZ =  d3.event.transform.k;
+        //різні x-axis labels на різних рівнях зуму:
         if(cZ < 2.5){
             xAxis.tickFormat(d3.timeFormat("%b"))
         } else if (cZ >=2.5 && cZ < 4 ){
@@ -173,15 +164,19 @@ retrieve_plot_data(function(data) {
             xAxis.tickFormat(d3.timeFormat("%d.%m"))
         }
 
+
         gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
         gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
+        console.log(d3.event.transform.rescaleY);
 
-        var transform = d3.event.transform;
-        points_g.attr("transform", d3.event.transform);
+        /* якщо селекнути точки через points_g, тоді графік скейлиться поверх x та y, але не пропадає
+        значення 0 на y-axis. Якщо селектити через svg графік красивий, але пропадає 0 tick */
+        // points_g.attr("transform", d3.event.transform);
+        svg.selectAll('.bubble').attr("transform", d3.event.transform);
     }
 
 
-
+    // аннтоація
     var swoopy = d3.swoopyDrag()
         .x(function(d){
             return xScale(parseDate(d.sepalWidth))})
@@ -200,7 +195,6 @@ retrieve_plot_data(function(data) {
                 .attr("stroke", function(d) {
                     return d.fill;
                 })
-
         });
 
     swoopySel.selectAll('text')
@@ -219,17 +213,13 @@ retrieve_plot_data(function(data) {
                 .tspans(d3.wordwrap(d.text, d.wrap, d.betweenBig)); //wrap after 20 char
 
         });
+    
+    
+
 
     //DRAW SCATTER PLOT
     function update(dataForChart, counter) {
-
-       // swoopy.x(function(d){
-       //          return xScale(parseDate(d.sepalWidth))})
-       //      .y(function(d){
-       //          return yScale(d.sepalLength)});
-
         xAxis.tickFormat(d3.timeFormat("%b"));
-
 
         //get new w/h
         var viewBox = $("#scatter")[0].getBoundingClientRect(),
@@ -248,11 +238,10 @@ retrieve_plot_data(function(data) {
         zoom.extent([[0, 0], [width, height]])
             .translateExtent([[0, 0], [width, height]]);
 
-
         svg.select("#zoom")
-            .attr("width", width)
-            .attr("height", height)
-            .attr('transform', 'translate(' + margin.left + ',' + (margin.top + 10) + ')');
+            .attr("width", window.innerWidth)
+            .attr("height", window.innerHeight)
+            .attr('transform', 'translate(' + 0 + ',' + 0 + ')');
 
         zoom.transform(points_g, d3.zoomIdentity);
 
@@ -262,7 +251,7 @@ retrieve_plot_data(function(data) {
 
         // EXIT
         bubble.exit()
-            // .transition(t)
+        // .transition(t)
             .remove();
 
         // UPDATE
@@ -277,15 +266,9 @@ retrieve_plot_data(function(data) {
                 return yScale(d[counter]);
             })
             .style('fill', function (d) {
-                if (d.stan != "В наданні послуги відмовллено") {
                     return color(d.color);
-                } else {
-                    return "#E01A25"
-                }
-            })
-            ;
 
-
+            });
 
 
         // ENTER
@@ -306,18 +289,19 @@ retrieve_plot_data(function(data) {
             })
             .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
             .attr('height', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
-            .style("opacity", 0.8)
+            .style("opacity", 1)
+            .style("stroke", function(d) {
+                if(d.positive != "позитивне") {
+                    return "red"
+                }
+            })
         ;
-
-
 
             svg.selectAll(".bubble").on("click", function(d) {
                 console.log(d)
             });
 
 
-
-        
         // tippy('.bubble', {
         //     hideOnClick: false,
         //     delay: 50,
@@ -386,19 +370,16 @@ retrieve_plot_data(function(data) {
 
     var selected =  "Реєстрація місця проживання/перебування";
 
-
     var firstData = data.filter(function (d) {
         return d.service === selected
     });
+
     update(firstData, "counterTotal");
-
-
 
     var selectedNew = "Реєстрація місця проживання/перебування";
 
 
     //draw TABLE
-
     d3.csv('data/services.csv', function (tabledata) {
         tabledata.forEach(function (d) {
             d.Freq = +d.Freq;
@@ -419,14 +400,11 @@ retrieve_plot_data(function(data) {
 
         var hRow = thead.append("tr");
 
-
         hRow.append("th")
             .text("К-ть");
 
         hRow.append("th")
             .text("Послуги");
-
-
 
         var tbody = table
             .append("tbody");
@@ -449,10 +427,10 @@ retrieve_plot_data(function(data) {
             })
             .on("click", function(d){
                 selectedNew = d.Var1;
-                var type = $('input[name=vehicle]:checked').val();
+                var type = $('select[name=applicant]').val();
                 $('td').css("color", "#a8a8a8");
                 $(this).css("color", "white");
-                if(type === "") {
+                if(type === "select") {
                     if (selectedNew === "Реєстрація місця проживання/перебування") {
                         update(firstData, "counterTotal");
                     } else {
@@ -468,25 +446,19 @@ retrieve_plot_data(function(data) {
                     });
 
                     update(firstDataNew, "counterByType");
-
                 }
-
-
-
-
-
                 $("#scatterHeader h2").text(selectedNew);
             });
 
 
+
+        //таблиця непопулярних послуг
         var unpopular = tabledata.filter(function(d) {
             return d.Freq <= 100
         });
 
 
-        var table2 = d3.select("#unpopular-services")
-            .style("height", "50vh")
-            .style("overflow-y", 'auto');
+        var table2 = d3.select("#unpopular-services");
 
 
         var tbody2 = table2
@@ -501,19 +473,19 @@ retrieve_plot_data(function(data) {
         rows2.append("td")
             .text(function (d) {
                 return d.Var1
-            })
-
+            });
 
         rows2.append("td")
             .text(function (d) {
                 return d.Freq
             });
-
-        
-
-
     });
 
+
+
+
+
+    //якщо обраний якийсь фыльтр знизу
     $('input[type=radio][name=vehicle]').on('change', function() {
         var type = $('input[name=vehicle]:checked').val();
         if(type === "") {
@@ -530,13 +502,43 @@ retrieve_plot_data(function(data) {
             var firstDataNew = data.filter(function (d) {
                 return d.service === selectedNew && d.type === type
             });
+            update(firstDataNew, "counterByType");
+        }
+    });
 
+
+    $('select[name=applicant]').on("change", function() {
+        var applicantVal = $('select[name=applicant]').val();
+        if(applicantVal === "select") {
+            if (selectedNew === "Реєстрація місця проживання/перебування") {
+                update(firstData, "counterTotal");
+            } else {
+                let firstDataNew = data.filter(function (d) {
+                    return d.service === selectedNew
+                });
+                update(firstDataNew, "counterTotal");
+            }
+        } else {
+            let firstDataNew = data.filter(function (d) {
+                return d.service === selectedNew && d.type === applicantVal
+            });
             update(firstDataNew, "counterByType");
 
         }
 
-
     });
+
+    // $('select[name=result]').on("change", function() {
+    //     var resultVal = $('select[name=result]').val();
+    //     if(resultVal === "select") {
+    //         update(firstData, "counterTotal");
+    //     } else {
+    //     let firstDataNew = data.filter(function (d) {
+    //         return d.service === selectedNew && d.positive === resultVal
+    //     });
+    //     update(firstDataNew, "counterTotal");
+    //     }
+    // });
 
 
 
@@ -548,15 +550,15 @@ var annotations = [
         "sepalWidth": "2017-01-05",
         "sepalLength": 50,
         "path": "",
-        "wrap": 20,
-        "text": "Одна точка - одне звернення. Графік масштабується колесиком миші",
+        "wrap": 6,
+        "text": "Одна точка - одне звернення",
         "fill":"#a8a8a8",
-        "size":"12px",
+        "size":"14px",
         // "bigScreenSize":"10px",
         "marker":"no",
-        "betweenBig": 15,
+        "betweenBig": 12,
         "textOffset": [
-            63,-252
+            600, -200
         ]
     }
 ]

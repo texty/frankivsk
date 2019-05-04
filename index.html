@@ -12,14 +12,19 @@
 </head>
 
 <style>
-    main {
+   header {
+       display:flex;
+       flex-direction: column;
+       height:100vh;
+   }
 
+   header h1, header h3 {
+       margin:auto;
+   }
 
-    }
-
-    p {
+    p, h2 {
         width:60%;
-        margin:auto;
+        margin:20px auto;
         font-size:16px;
         line-height: 1.6;
     }
@@ -33,9 +38,29 @@
         position:relative;
     }
 
-    #my_dataviz {
-        width:50%;
-        height:60vh;
+    #treemaps {
+        margin: 50px 0;
+        display:grid;
+        grid-template-columns: 50% 50%;
+    }
+
+   #treemaps h2 {
+       grid-column:1/-1;
+       text-align: center;
+   }
+
+   #perItem {
+       grid-column:1/-1;
+       color:#CB93B2;
+   }
+
+   #treemaps h3 {
+       text-align: center;
+   }
+
+    #my_dataviz1, #my_dataviz2 {
+        width:90%;
+        height:70vh;
     }
 
 
@@ -46,7 +71,6 @@
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
-
     <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -56,11 +80,14 @@
 </div>
 
 <main>
-    <h1>10 послуг Івано-Франківського ЦНАПу, що розповідають про життя міста
-    </h1>
+    <header>
+        <h1>10 послуг Івано-Франківського ЦНАПу, <br> що розповідають про життя міста
+        </h1>
 
-    <h3>Візуалізація даних Центру надання адміністративних послуг м. Івано-Франківська
-    </h3>
+        <h3>Візуалізація даних <br> Центру надання адміністративних послуг <br> м. Івано-Франківська
+        </h3>
+    </header>
+
 
     <p>Завдяки реформі децентралізації громади отримали більше повноважень у сфері адміністративних послуг. Органи місцевого самоврядування можуть визначати перелік адмінпослуг, умови їх надання, запроваджувати супутні та додаткові сервіси. При цьому, адміністративний збір надходить у місцевий бюджет. За кілька останніх років у країні відбувся бум ЦНАПів.
     </p>
@@ -72,8 +99,18 @@
         Центр надання адміністративних послуг міста Івано-Франківська першим в Україні оприлюднив детальні дані про про надані послуги. Ми створили візуалізацію, що показує попит на різні послуги протягом року, а також проаналізували набір і дізнались що він може розповісти про життя міста.
     </p>
 
-    <div id="my_dataviz">
 
+    <!-- Treemap з даних таблички -->
+
+    <div id="treemaps">
+        <h2>Що розповідають про життя міста 10 найпопулярніших послуг </h2>
+        <div id="my_dataviz1">
+            <h3>Кількість наданих послуг (2018)</h3>
+        </div>
+        <div id="my_dataviz2">
+            <h3>Сума адміністративного збору (2018)</h3>
+        </div>
+        <p id="perItem"></p>
     </div>
 
     <p>Найпопулярніша послуга. Кожна 5-та послуга, надана Івано-Франківським ЦНАПом — реєстрація місця проживання. Це найбільш популярний сервіс, яким користуються понад 10 тис. мешканців міста щорічно. Дані свідчать про позитивний природний та міграційний приріст населення. У 2018 іванофранківці у 2.6 рази частіше реєстрували місце проживання, аніж знімалися з реєстрації. У 2017 це відношення було ще більшим — 3.5 рази. Цікавою є сезонна динаміка показників. Наприклад, на візуалізації можна спостерігати хвилі “виписки” й “вписки” студентів, що виїздять та приїжджають на навчання. А восени іванофранківці “наводили лад” з реєстрацією, щоб отримати субсидії.
@@ -86,83 +123,99 @@
     <p>Земля та будівницво. Половина послуг з топ-10 пов'язана із земельними питаннями або будівництвом. Це важливі індикатори соціально-економічного розвитку та ділового клімату. Наприклад, кількість виданих витягів та реєстрацій земельних ділянок за 2018 рік останній рік зросла майже у 1.5 рази (до 2569 та 2538 відповідно). На 22.6% зросла кількість довідок з містобудівного кадастру, 5.6% — кількість декларації про готовність об'єктів будівництва до експлуатації. Видача витягів із земельного кадастру у 2018 році принесла в бюджет понад 296 тис. грн.
     </p>
 
-    <h2>Чому ЦНАПи мають відкривати дані?
-    </h2>
+    <h2>Чому ЦНАПи мають відкривати дані? </h2>
 
     <p>Дані допомагають приймати правильні рішення. Здача паспорту на вклеювання фото — 5 хвилин, реєстрація місця проживання однієї особи — 10 хвилин, двох — 15, трьох — 20. Дані дозволили запровадити в ЦНАПі строки надання послуг, що однаково комфортні для адміністраторів і відвідувачів. Щоп’ятниці керівництво міста розглядає згенеровані системою звіти. Якщо є затримки, то виконавчий комітет з'ясовує їх причини та намагається виправити ситуацію. Але потенціал даних можна посилити відкривши їх для бізнесу та громадськості.
     </p>
 
     <p> Підвищення прозорості та підзвітності. Розподіл комунальних ресурсів, видача дозволів на будівництво, реєстрація земельних ділянок стають ще прозорими, обмежуються корупційні ризики. Аналізуючи дані, активісти, журналісти й підприємці можуть знаходити аномальні відхилення відмов та затримок, з’ясовувати їх причини. Як зазначає Богдан Питель, певний рівень відмов у наданні послуг — це природне явище. Запитувачі можуть допускати помилки в документах або самі державні реєстри можуть містити неточності. У такому разі, процедуру знадобитись пройти ще раз. Зрештою, якщо фізична або юридична особа не згодна рішенням вона може оскаржити відмову в суді. </p>
 
-    <p>
+    <p style="margin-bottom: 100px;">
         Поліпшення бізнес-клімату. На думку Наталії Кобильчак, голови правління ГО "Івано-Франківський регіональний центр" дані ЦНАПу цікаві для аналізу бізнес-клімату. Можна виявити точково, що забирає в підприємців найбільше часу та ресурсів і спрямувати зусилля саме на вирішення цих питань.
 
     </p>
-
-
 </main>
 
+
+<!-- Візуалізація-->
+
 <div id="content">
-    <div id="scatterHeader">
-        <div>
-            <h2>Реєстрація місця проживання/перебування</h2>
 
+
+    <!-- Шапка візуалізації з фільтрами-->
+    <div class="header">
+
+        <!--колонка 1-->
+        <div style="margin-left:10px;">
+            <h2>1. Оберіть <br> тип послуги <br> ліворуч від <br> графіка</h2>
         </div>
-    </div>
+
+        <!--колонка 2-->
+        <div>
+        <h2>2. Налаштуйте фільтр</h2>
+        <div class="field">
+            <label>За типом тих, хто звертався</label><br>
+            <select name="applicant" class="group-by-input">
+                <option value="select">Всі</option>
+                <option value="Фізична особа - підприємець">ФОП</option>
+                <option value="Юридична особа">Юридичні особи</option>
+                <option value="Фізична особа">Фізичні особи</option>
+            </select>
+        </div>
+        </div>
 
 
+        <!--колонка 3-->
+        <div>
+            <h2>3. Подивіться інші послуги <br> (менше 100 звернень)</h2>
+            <button id="unpopular">Відкрити таблицю</button>
+        </div>
+
+    </div> <!--end of the .header-->
+
+
+
+    <!-- Назва обраної послуги на графіку -->
+    <!--<div id="scatterHeader">-->
+        <!--<div>-->
+            <!--&lt;!&ndash;<h2>Реєстрація місця проживання/перебування</h2>&ndash;&gt;-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!-- Графік -->
     <div id="scatter">
         <svg width="100%" height= "100%"></svg>
     </div>
 
-    <div id="typeFilter" class="desk">
-        <form>
-            <input type="radio" name="vehicle" value="Фізична особа"> Фізособи
-            <input type="radio" name="vehicle" value="Юридична особа"> Юрособи
-            <input type="radio" name="vehicle" value="Фізична особа - підприємець"> ФОП
-            <input type="radio" checked name="vehicle" value=""> загалом
-        </form>
-    </div>
 
+    <!-- Старий фільтр за типами: юрособа/фізособа/ФОП -->
+    <!--<div id="typeFilter" class="desk">-->
+        <!--<form>-->
+            <!--<input type="radio" name="vehicle" value="Фізична особа"> Фізособи-->
+            <!--<input type="radio" name="vehicle" value="Юридична особа"> Юрособи-->
+            <!--<input type="radio" name="vehicle" value="Фізична особа - підприємець"> ФОП-->
+            <!--<input type="radio" checked name="vehicle" value=""> загалом-->
+        <!--</form>-->
+    <!--</div>-->
 
-    <div id="tableHeader">
-        <div>
-            <!--<button id="popular">Популярні сервіси</button>-->
-            <button id="unpopular">Інші послуги (менше 100 звернень)</button>
-        </div>
-    </div>
-
+    <!--Таблиця з переліком послуг ліворуч від графіка-->
     <div id="table"></div>
-
-
 
 </div>
 
-
-
-
-
-
-
-
-
 <!-- Libraries -->
 <script src="lib/jquery-2.1.4.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
 <script src ="https://d3js.org/d3.v4.min.js"></script>
-<script src="https://giottojs.org/d3-canvas-transition/0.3.3/d3-canvas-transition.js"></script>
-
 <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
-
-
-<script src="lib/d3fc.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.js"></script>
 <script src="lib/swoopy-drag.js"></script>
-
 <script src="lib/share-behavior.js"></script>
 <script src="lib/d3v4jetpack.js"></script>
+<script src="https://unpkg.com/popper.js@1"></script>
+<script src="https://unpkg.com/tippy.js@4"></script>
+<!--<script src="https://giottojs.org/d3-canvas-transition/0.3.3/d3-canvas-transition.js"></script>-->
+<!--<script src="lib/d3fc.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.js"></script>-->
 
 <!-- Scripts -->
 <script src="js/script.js"></script>
@@ -171,30 +224,19 @@
 
 <script>
     var modal = document.getElementById('myModal');
-
-    // Get the button that opens the modal
     var btn = document.getElementById("unpopular");
-
-    // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the button, open the modal
     btn.onclick = function() {
         modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
+    };
     span.onclick = function() {
         modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
+    };
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
     }
-
 </script>
 
 
