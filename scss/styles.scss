@@ -18,6 +18,9 @@ header {
     margin:auto;
     font-size:45pt;
     text-align: center;
+    @media(max-width:800px) {
+      font-size:25pt;
+    }
   }
 
   h3 {
@@ -25,6 +28,9 @@ header {
     width:80%;
     margin:auto;
     font-size:25pt;
+    @media(max-width:800px) {
+      font-size:16pt;
+    }
   }
 
   #title {
@@ -38,11 +44,10 @@ header {
 
 
 #text {
-
   p {
-
     width: 60%;
     margin:20px auto;
+
   }
 }
 #content {
@@ -188,7 +193,7 @@ header {
 #table {
   grid-row:2/3;
   grid-column: 1/2;
-  max-height:80vh;
+  max-height:87vh;
   overflow-y:auto;
   direction: rtl;
   @media only screen and (max-width:825px)
@@ -220,7 +225,7 @@ table {
 
 td {
   padding-bottom:20px;
-  font-size:15px;
+  font-size:13px;
   color: #a8a8a8;
   cursor:pointer;
 
@@ -376,7 +381,7 @@ path.domain{
   //bottom:-60px;
   //width:100%;
   height:max-content;
-  background-color: #c6c6c6;
+  background-color: rgba(198, 198, 198, 0.2);
   display:grid;
   grid-template-columns: 20% auto 20%;
   @media only screen
@@ -392,7 +397,7 @@ path.domain{
  h2 {
   margin:0 0 20px 0;
   width:100%;
-  color:#484d60;
+  color:#c6c6c6;
   text-align: left;
 }
 
@@ -409,7 +414,7 @@ select {
 
 label {
   margin-bottom:10px;
-  color:#484d60;
+  color:#c6c6c6;
   font-size: 14px;
   display: inline-block;
 }
@@ -420,12 +425,69 @@ label {
 }
 
   #unpopular {
-    border:none;
+    //border:none;
     color:#c6c6c6 ;
     background-color: #484d60;
-    padding: 5px;
+    padding: 10px;
+    border: 0.5px solid lightgrey;
     cursor:pointer;
     letter-spacing: 1px;
   }
 }
+
+
+header {
+  display:flex;
+  flex-direction: column;
+  height:100vh;
+}
+
+header h1, header h3 {
+  margin:auto;
+}
+
+p, h2 {
+  width:60%;
+  margin:20px auto;
+  font-size:16px;
+  line-height: 1.6;
+  @media(max-width:800px){
+    width:90%;
+  }
+}
+
+
+.node {
+  background: lightgrey;
+  /*margin:2px;*/
+}
+#content {
+  position:relative;
+}
+
+#treemaps {
+  margin: 50px 0;
+  display:grid;
+  grid-template-columns: 50% 50%;
+}
+
+#treemaps h2 {
+  grid-column:1/-1;
+  text-align: center;
+}
+
+#perItem {
+  grid-column:1/-1;
+  color:#CB93B2;
+}
+
+#treemaps h3 {
+  text-align: center;
+}
+
+#my_dataviz1, #my_dataviz2 {
+  width:90%;
+  height:70vh;
+}
+
 

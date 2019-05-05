@@ -12,56 +12,6 @@
 </head>
 
 <style>
-   header {
-       display:flex;
-       flex-direction: column;
-       height:100vh;
-   }
-
-   header h1, header h3 {
-       margin:auto;
-   }
-
-    p, h2 {
-        width:60%;
-        margin:20px auto;
-        font-size:16px;
-        line-height: 1.6;
-    }
-
-
-    .node {
-        background: lightgrey;
-        /*margin:2px;*/
-    }
-    #content {
-        position:relative;
-    }
-
-    #treemaps {
-        margin: 50px 0;
-        display:grid;
-        grid-template-columns: 50% 50%;
-    }
-
-   #treemaps h2 {
-       grid-column:1/-1;
-       text-align: center;
-   }
-
-   #perItem {
-       grid-column:1/-1;
-       color:#CB93B2;
-   }
-
-   #treemaps h3 {
-       text-align: center;
-   }
-
-    #my_dataviz1, #my_dataviz2 {
-        width:90%;
-        height:70vh;
-    }
 
 
 
@@ -147,7 +97,7 @@
 
         <!--колонка 1-->
         <div style="margin-left:10px;">
-            <h2>1. Оберіть <br> тип послуги <br> ліворуч від <br> графіка</h2>
+            <h2>1. Оберіть <br> тип послуги</h2>
         </div>
 
         <!--колонка 2-->
@@ -157,9 +107,10 @@
             <label>За типом тих, хто звертався</label><br>
             <select name="applicant" class="group-by-input">
                 <option value="select">Всі</option>
+                <option value="Фізична особа">Фізичні особи</option>
                 <option value="Фізична особа - підприємець">ФОП</option>
                 <option value="Юридична особа">Юридичні особи</option>
-                <option value="Фізична особа">Фізичні особи</option>
+
             </select>
         </div>
         </div>
@@ -184,7 +135,7 @@
 
     <!-- Графік -->
     <div id="scatter">
-        <svg width="100%" height= "100%"></svg>
+        <svg width="100%" height="100%"></svg>
     </div>
 
 
