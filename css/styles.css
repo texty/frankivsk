@@ -251,9 +251,6 @@ path.domain {
   text-decoration: none;
   cursor: pointer; }
 
-.tree-nodes, .tree-nodes2 {
-  opacity: 0.8; }
-
 .header:hover {
   opacity: 1; }
 
@@ -323,12 +320,7 @@ p, h2 {
   position: relative; }
 
 #treemaps {
-  margin: 50px 0;
-  display: grid;
-  grid-template-columns: 50% 50%; }
-  @media (max-width: 815px) and (orientation: portrait) {
-    #treemaps {
-      display: block; } }
+  margin: 50px 0; }
 
 #treemaps h2 {
   grid-column: 1/-1;
@@ -343,7 +335,11 @@ p, h2 {
 
 #my_dataviz1, #my_dataviz2 {
   width: 90%;
-  height: 70vh; }
+  margin: auto;
+  height: 90vh; }
+  @media (max-width: 825px) and (orientation: landscape) {
+    #my_dataviz1, #my_dataviz2 {
+      height: 110vh; } }
 
 @media (max-width: 825px) {
   .legend1, .legend2 {
