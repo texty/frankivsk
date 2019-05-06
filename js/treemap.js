@@ -107,7 +107,7 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
     if(window.innerWidth < 800){
         nodes
             .append("text")
-            .style("font-size", "12px")
+            .style("font-size", "11px")
             .attr("class", "treemap-text")
             .attr("x", function(d) { return Math.round(d.x0 * ratio) + 5 + "px"; })
             .attr("y", function(d) { return Math.round(d.y0) + 5 + "px"; })
@@ -139,7 +139,7 @@ function getOpacity() {
     var cbbox = this.parentNode.querySelector('rect').getBBox();
     var opacity;
 
-    if(bbox.height > cbbox.height || bbox.width > cbbox.width) {
+    if(bbox.height > cbbox.height - 5 || bbox.width > cbbox.width - 5) {
         opacity = 0;
     } else {
         opacity = 1;
@@ -157,7 +157,7 @@ function getOpacity() {
                 var word,
                 line = [],
                 lineNumber = 0,
-                lineHeight = 1.5, // ems
+                lineHeight = 1.3, // ems
                 x = text.attr("x"),
                 y = text.attr("y"),
                 dy = 0, //parseFloat(text.attr("dy")),
