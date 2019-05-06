@@ -13,15 +13,19 @@ var red = "#3D728E";
 var green = "#CB93B2";
 
 var treeViewBox = $("#my_dataviz1")[0].getBoundingClientRect();
-
-var treemapMargin = {top: 10, right: 10, bottom: 10, left: 10},
+var treemapMargin = {top: 5, right: 10, bottom: 30, left: 10},
     treemapWidth = treeViewBox.width - treemapMargin.left - treemapMargin.right,
     treemapHeight = treeViewBox.height - treemapMargin.top - treemapMargin.bottom - 100;
 
+var treemapInnerHeight = treemapHeight * 0.90;
+
+// var gElementWidth = document.querySelector('#my_dataviz1 svg').querySelector('g').getBBox();
+// console.log(gElementWidth);
+
 
 var treeColor = d3.scaleOrdinal() // D3 Version 4
-    .domain(["платна", "безкоштовна"])
-    .range([green, "#E6EFFF"]);
+    .domain(["~3 млн", "350 т.", "~300 т.", "~70 т.", "безкошт."])
+    .range(["#8e677d", "#cb93b2", "#dbb3c9", "#dbb3c9", "#E6EFFF"]);
 
 
 // append the svg object to the body of the page
@@ -33,18 +37,9 @@ var treemap1 = d3.select("#my_dataviz1")
     .attr("transform",
         "translate(" + treemapMargin.left + "," + treemapMargin.top + ")");
 
-var treemap2 = d3.select("#my_dataviz2")
-    .append("svg")
-    .attr("width", treemapWidth + treemapMargin.left + treemapMargin.right)
-    .attr("height", treemapHeight + treemapMargin.top + treemapMargin.bottom)
-    .append("g")
-    .attr("transform",
-        "translate(" + treemapMargin.left + "," + treemapMargin.top + ")");
-
 
 // Read data
 d3.csv('data/top_frankivsk.csv', function(treedata1) {
-
     // stratify the data: reformatting for d3.js
     var root = d3.stratify()
         .id(function(d) { return d.id; })   // Name of the entity (column name is name in csv)
@@ -56,7 +51,7 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
     // Then d3.treemap computes the position of each element of the hierarchy
     // The coordinates are added to the root object above
     d3.treemap()
-        .size([treemapWidth / ratio , treemapHeight])
+        .size([treemapWidth / ratio , treemapInnerHeight])
         .padding(4)
         (root);
 
@@ -69,9 +64,6 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
 
     // use this information to add rectangles:
     nodes
-        // .selectAll("rect")
-        // .data(root.leaves())
-        // .enter()
         .append("rect")
         .attr("class", function(d) {
             return d.data.ind + " tree-nodes"
@@ -80,8 +72,6 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
         .attr("y", function(d) { return Math.round(d.y0) + "px"; })
         .attr("width", function(d) { return Math.round(d.x1 * ratio) - Math.round(d.x0 * ratio) + 1 + "px"; })
         .attr("height", function(d) { return Math.round(d.y1) - Math.round(d.y0) + "px"; })
-        // .attr("opacity", function(d) {
-        //     return d.data.opacity; })
         .attr("data-tippy-content", function(d) {  return "<b>Послуга:</b> " + d.data.id +
             '<br> <b>Надано:</b> ' + d.data.size + " послуг" +
                 '<br> <b>Вартість: </b>' + d.data.perItem +
@@ -111,7 +101,7 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
             .attr("y", function(d) { return Math.round(d.y0) + 15 + "px"; })
             .text(function(d){
                 return d.data.short + "/ " + d.data.size  })
-            .call(wrap, 30)
+            .call(wrap, 150)
             .attr("opacity", getOpacity);
     }
     if(window.innerWidth < 800){
@@ -120,12 +110,28 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
             .style("font-size", "12px")
             .attr("class", "treemap-text")
             .attr("x", function(d) { return Math.round(d.x0 * ratio) + 5 + "px"; })
-            .attr("y", function(d) { return Math.round(d.y0) + 15 + "px"; })
+            .attr("y", function(d) { return Math.round(d.y0) + 5 + "px"; })
             .text(function(d){
                 return d.data.short + "/ " + d.data.size  })
             .call(wrap, 30)
             .attr("opacity", getOpacity);
      }
+
+    treemap1.append("g")
+        .attr("class", "treeLegend")
+        .attr("transform", "translate("+ 10 +',' + (treemapInnerHeight + 20) + ")");
+
+    var treeLegend = d3.legendColor()
+        .labelFormat(d3.format(".2f"))
+        .useClass(false)
+        .title("")
+        .titleWidth(200)
+        .orient('horizontal')
+        .shapeWidth((treemapWidth-23) / 5)
+        .scale(treeColor);
+
+    treemap1.select(".treeLegend")
+        .call(treeLegend);
 });
 
 function getOpacity() {
@@ -151,7 +157,7 @@ function getOpacity() {
                 var word,
                 line = [],
                 lineNumber = 0,
-                lineHeight = 1.1, // ems
+                lineHeight = 1.5, // ems
                 x = text.attr("x"),
                 y = text.attr("y"),
                 dy = 0, //parseFloat(text.attr("dy")),

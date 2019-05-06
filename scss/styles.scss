@@ -489,13 +489,17 @@ p, h2 {
   text-align: center;
 }
 
-#my_dataviz1, #my_dataviz2 {
-  width:90%;
+#my_dataviz1 {
+  width:96%;
   margin:auto;
-  height:90vh;
+  height:95vh;
   @media(max-width:825px) and
   (orientation: landscape){
-    height:110vh;
+    height:130vh;
+  }
+
+  text {
+    pointer-events: none;
   }
 }
 
@@ -514,7 +518,7 @@ p, h2 {
 
 
 
-.legend1 text, .legend2 text, .legendMob text {
+.legend1 text, .legend2 text, .legendMob text, .treeLegend text {
   fill: #c6c6c6;
 }
 
