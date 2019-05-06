@@ -8,11 +8,46 @@ var parseDate = d3.timeParse("%Y-%m-%d");
 var format = d3.timeFormat("%d-%b-%Y");
 var oneDay = 24 * 60 * 60 * 1000;
 var margin = {top: 40, right: 40, bottom: 0, left: 40};
-// var viewBox = $("#scatter svg")[0].getAttribute("viewBox").split(" ");
-// var size = viewBox.slice(2);
-// var width = size[0];
-// var height = size[1];
 
+
+var locale = d3.timeFormatLocale({
+    "dateTime": "%A, %e %B %Y г. %X",
+    "date": "%d.%m.%Y",
+    "time": "%H:%M:%S",
+    "periods": ["AM", "PM"],
+    "days": ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"],
+    "shortDays": ["вс", "пн", "вт", "ср", "чт", "пт", "сб"],
+    "months": ["січ", "лют", "берез", "квіт", "трав", "черв", "лип", "серп", "верес", "жовт", "лист", "груд"],
+    "shortMonths": ["січ", "лют", "берез", "квіт", "трав", "черв", "лип", "серп", "верес", "жовт", "лист", "груд"]
+});
+
+var formatMillisecond = locale.format(".%L"),
+    formatSecond = locale.format(":%S"),
+    formatMinute = locale.format("%I:%M"),
+    formatHour = locale.format("%I %p"),
+    formatDay = locale.format("%a %d"),
+    formatWeek = locale.format("%b %d"),
+    formatMonth = locale.format("%B"),
+    formatYear = locale.format("%Y");
+
+// var x = d3.scaleTime()
+//     .domain([new Date(2000, 0, 1), new Date(2001, 0, 1)])
+//     .range([0, width]);
+//
+// svg.append("g")
+//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+//     .call(d3.axisBottom(x)
+//         .tickFormat(multiFormat));
+
+function multiFormat(date) {
+    return (d3.timeSecond(date) < date ? formatMillisecond
+        : d3.timeMinute(date) < date ? formatSecond
+        : d3.timeHour(date) < date ? formatMinute
+        : d3.timeDay(date) < date ? formatHour
+        : d3.timeMonth(date) < date ? (d3.timeWeek(date) < date ? formatDay : formatWeek)
+        : d3.timeYear(date) < date ? formatMonth
+        : formatYear)(date);
+}
 var viewBox = $("#scatter")[0].getBoundingClientRect();
 var width = viewBox.width - margin.right - margin.left;
 var height = viewBox.height;
@@ -231,7 +266,7 @@ retrieve_plot_data(function(data) {
 
     //DRAW SCATTER PLOT
     function update(dataForChart, counter) {
-        xAxis.tickFormat(d3.timeFormat("%b"));
+        xAxis.tickFormat(multiFormat);
 
         var viewBox = $("#scatter")[0].getBoundingClientRect();
         var width = viewBox.width - margin.right - margin.left;
@@ -334,7 +369,7 @@ retrieve_plot_data(function(data) {
         var height = viewBox.height;
 
         xScale.range([0, width]);
-        var xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat("%b"));
+        var xAxis = d3.axisBottom(xScale).tickFormat(multiFormat);
 
         yScale.range([height, 0]);
         var yAxis = d3.axisLeft(yScale);
@@ -550,4 +585,5 @@ var annotations = [
         ]
     }
 ]
+
 
