@@ -91,6 +91,9 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
         allowHTML: true
     });
 
+
+    var treeLegend;
+
     // and to add the text labels
     if(window.innerWidth >= 800){
         nodes
@@ -103,7 +106,20 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
                 return d.data.short + "/ " + d.data.size  })
             .call(wrap, 150)
             .attr("opacity", getOpacity);
+
+
+        treeLegend = d3.legendColor()
+            .labelFormat(d3.format(".2f"))
+            .useClass(false)
+            .title("")
+            .titleWidth(200)
+            .orient('horizontal')
+            .shapeWidth(80)
+            .scale(treeColor);
+
     }
+
+
     if(window.innerWidth < 800){
         nodes
             .append("text")
@@ -115,23 +131,25 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
                 return d.data.short + "/ " + d.data.size  })
             .call(wrap, 30)
             .attr("opacity", getOpacity);
+
+
+        treeLegend = d3.legendColor()
+            .labelFormat(d3.format(".2f"))
+            .useClass(false)
+            .title("")
+            .titleWidth(200)
+            .orient('horizontal')
+            .shapeWidth((treemapWidth - 23) / 5)
+            .scale(treeColor);
      }
 
     treemap1.append("g")
         .attr("class", "treeLegend")
         .attr("transform", "translate("+ 10 +',' + (treemapInnerHeight + 20) + ")");
 
-    var treeLegend = d3.legendColor()
-        .labelFormat(d3.format(".2f"))
-        .useClass(false)
-        .title("")
-        .titleWidth(200)
-        .orient('horizontal')
-        .shapeWidth((treemapWidth-23) / 5)
-        .scale(treeColor);
-
     treemap1.select(".treeLegend")
         .call(treeLegend);
+
 });
 
 function getOpacity() {
