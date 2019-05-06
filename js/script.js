@@ -163,7 +163,7 @@ retrieve_plot_data(function(data) {
         .attr("class", function(d, i) {
             return "rect" + i
 
-        })
+        });
 
 
 
@@ -199,63 +199,11 @@ retrieve_plot_data(function(data) {
     function zoomed() {
         var new_xScale = d3.event.transform.rescaleX(xScale);
         var new_yScale = d3.event.transform.rescaleY(yScale);
-// update axes
+        // update axes
         gX.call(xAxis.scale(new_xScale));
         gY.call(yAxis.scale(new_yScale));
         svg.selectAll('.bubble').attr("transform", d3.event.transform);
     }
-        // var cZ =  d3.event.transform.k;
-        // //різні x-axis labels на різних рівнях зуму:
-        // if(cZ < 2.5){
-        //     xAxis.tickFormat(d3.timeFormat("%b"))
-        // } else if (cZ >=2.5 && cZ < 4 ){
-        //     xAxis.tickFormat(d3.timeFormat("%a %d"))
-        // } else {
-        //     xAxis.tickFormat(d3.timeFormat("%d.%m"))
-        // }
-
-
-
-    // // аннтоація
-    // var swoopy = d3.swoopyDrag()
-    //     .x(function(d){
-    //         return xScale(parseDate(d.sepalWidth))})
-    //     .y(function(d){
-    //         return yScale(+d.sepalLength)})
-    //     .draggable(false)
-    //     .annotations(annotations);
-    //
-    // var swoopySel = svg.append('g')
-    //     .attr("fill", "none")
-    //     .call(swoopy);
-    //
-    // swoopySel.selectAll("path")
-    //     .each(function(d) {
-    //         d3.select(this)
-    //             .attr("stroke", function(d) {
-    //                 return d.fill;
-    //             })
-    //     });
-    //
-    // swoopySel.selectAll('text')
-    //     .each(function(d){
-    //         d3.select(this)
-    //             .text('')
-    //             .attr("class", "wrappedText")
-    //             .style("font-weight", 400)
-    //             .attr("stroke", "none")
-    //             .attr("fill", function(d) {
-    //                 return d.fill;
-    //             })
-    //             .attr("font-size", function(d) {
-    //                 return d.size;
-    //             })
-    //             .tspans(d3.wordwrap(d.text, d.wrap, d.betweenBig)); //wrap after 20 char
-    //
-    //     });
-    
-    
-
 
     //DRAW SCATTER PLOT
     function update(dataForChart, counter) {
@@ -330,29 +278,11 @@ retrieve_plot_data(function(data) {
                 if(d.positive != "позитивне") {
                     return "red"
                 }
-            })
-        ;
+            });
 
             svg.selectAll(".bubble").on("click", function(d) {
                 console.log(d)
             });
-
-
-        // tippy('.bubble', {
-        //     hideOnClick: false,
-        //     delay: 50,
-        //     arrow: true,
-        //     inertia: true,
-        //     size: 'small',
-        //     duration: 500,
-        //     allowHTML: true,
-        //     trigger: "mouseenter",
-        //     interactive: true,
-        //     onShow(tip) {
-        //         tip.setContent(tip.reference.getAttribute('data-tippy-content'))
-        //     }
-        //  });
-
     }
 
 
@@ -379,19 +309,7 @@ retrieve_plot_data(function(data) {
             .attr('y', function (d) {
                 return yScale(d.counterTotal);
             });
-
-        // legend.select('rect').attr('x', width);
-        // legend.select('text').attr('x', width - 6);
-
-
-        // swoopySel.selectAll('text')
-        //     .each(function(d) {
-        //         d3.select(this)
-        //             .text('')
-        //             .tspans(d3.wordwrap(d.text, d.wrap, d.betweenBig)); //wrap after 20 char
-        //     })
-
-    });
+         });
 
     var selected =  "Реєстрація місця проживання/перебування";
     var firstData = data.filter(function (d) {
@@ -543,40 +461,7 @@ retrieve_plot_data(function(data) {
         }
 
     });
-
-    // $('select[name=result]').on("change", function() {
-    //     var resultVal = $('select[name=result]').val();
-    //     if(resultVal === "select") {
-    //         update(firstData, "counterTotal");
-    //     } else {
-    //     let firstDataNew = data.filter(function (d) {
-    //         return d.service === selectedNew && d.positive === resultVal
-    //     });
-    //     update(firstDataNew, "counterTotal");
-    //     }
-    // });
-
-
-
 });
 
-
-var annotations = [
-    {
-        "sepalWidth": "2017-01-05",
-        "sepalLength": 50,
-        "path": "",
-        "wrap": 6,
-        "text": "Одна точка - одне звернення",
-        "fill":"#a8a8a8",
-        "size":"14px",
-        // "bigScreenSize":"10px",
-        "marker":"no",
-        "betweenBig": 12,
-        "textOffset": [
-            600, -200
-        ]
-    }
-]
 
 
