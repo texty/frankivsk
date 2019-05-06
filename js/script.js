@@ -15,10 +15,10 @@ var locale = d3.timeFormatLocale({
     "date": "%d.%m.%Y",
     "time": "%H:%M:%S",
     "periods": ["AM", "PM"],
-    "days": ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"],
-    "shortDays": ["вс", "пн", "вт", "ср", "чт", "пт", "сб"],
-    "months": ["січ", "лют", "берез", "квіт", "трав", "черв", "лип", "серп", "верес", "жовт", "лист", "груд"],
-    "shortMonths": ["січ", "лют", "берез", "квіт", "трав", "черв", "лип", "серп", "верес", "жовт", "лист", "груд"]
+    "days": ["неділя", "понеділок", "вівторок", "середа", "четвер", "п'ятница", "субота"],
+    "shortDays": ["нд", "пн", "вт", "ср", "чт", "пт", "сб"],
+    "months": ["січ", "лют", "берез", "квіт", "трав", "черв", "лип", "серп", "верес", "жовт", "листоп", "груд"],
+    "shortMonths": ["січ", "лют", "берез", "квіт", "трав", "черв", "лип", "серп", "верес", "жовт", "листоп", "груд"]
 });
 
 var formatMillisecond = locale.format(".%L"),
@@ -30,15 +30,6 @@ var formatMillisecond = locale.format(".%L"),
     formatMonth = locale.format("%B"),
     formatYear = locale.format("%Y");
 
-// var x = d3.scaleTime()
-//     .domain([new Date(2000, 0, 1), new Date(2001, 0, 1)])
-//     .range([0, width]);
-//
-// svg.append("g")
-//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-//     .call(d3.axisBottom(x)
-//         .tickFormat(multiFormat));
-
 function multiFormat(date) {
     return (d3.timeSecond(date) < date ? formatMillisecond
         : d3.timeMinute(date) < date ? formatSecond
@@ -48,6 +39,8 @@ function multiFormat(date) {
         : d3.timeYear(date) < date ? formatMonth
         : formatYear)(date);
 }
+
+
 var viewBox = $("#scatter")[0].getBoundingClientRect();
 var width = viewBox.width - margin.right - margin.left;
 var height = viewBox.height;
