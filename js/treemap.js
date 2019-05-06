@@ -2,7 +2,7 @@
  * Created by yevheniia on 01.05.19.
  */
 
-var ratio = 3;
+var ratio = 1;
 
 var red = "#3D728E";
 var green = "#CB93B2";
@@ -67,9 +67,13 @@ d3.csv('data/top_frankivsk_amount.csv', function(treedata1) {
         })
         .attr("x", function(d) { return Math.round(d.x0 * ratio) + "px"; })
         .attr("y", function(d) { return Math.round(d.y0) + "px"; })
-        .attr("width", function(d) { return Math.round(d.x1 * ratio) - Math.round(d.x0 * ratio) + 8 + "px"; })
+        .attr("width", function(d) { return Math.round(d.x1 * ratio) - Math.round(d.x0 * ratio) + 1 + "px"; })
         .attr("height", function(d) { return Math.round(d.y1) - Math.round(d.y0) + "px"; })
-        .attr("data-tippy-content", function(d) {  return d.data.id  })
+        .attr("data-tippy-content", function(d) {  return "<b>Послуга:</b> " + d.data.id +
+            '<br> <b>Надано:</b> ' + d.data.size + " разів" +
+                '<br> <b>Вартість: </b>' + d.data.perItem
+
+        })
         .style("cursor", "pointer")
         .style("fill", function(d) {  return treeColor(d.data.price)   })
         .on("mouseover", function(d){
@@ -86,6 +90,7 @@ d3.csv('data/top_frankivsk_amount.csv', function(treedata1) {
     ;
 
     tippy('.tree-nodes', {
+        theme:'tomato',
         delay: 50,
         arrow: false,
         size: 'big',
@@ -102,12 +107,13 @@ d3.csv('data/top_frankivsk_amount.csv', function(treedata1) {
         .append("text")
 
         .attr("x", function(d) { return Math.round(d.x0 * ratio) + 5 + "px"; })
-        .attr("y", function(d) { return Math.round(d.y0) + 5 + "px"; })
-        .html(function(d){ return d.data.size  + " шт."})
-        .call(wrap, 20)
-        .attr("font-size", "13px")
+        .attr("y", function(d) { return Math.round(d.y0) + 15 + "px"; })
+        .text(function(d){
+            return d.data.shortTitle + " " + d.data.size + " шт." })
+        .call(wrap, 100)
+        .attr("font-size", "10px")
         .attr("fill", "rgb(72, 77, 96)")
-        .style("font-weight", "bold")
+        .style("font-weight", "normal")
 })
 
 
@@ -140,7 +146,7 @@ d3.csv('data/top_frankivsk_price.csv', function(treedata2) {
         })
         .attr("x", function(d) { return Math.round(d.x0 * ratio) + "px"; })
         .attr("y", function(d) { return Math.round(d.y0) + "px"; })
-        .attr("width", function(d) { return Math.round(d.x1 * ratio) - Math.round(d.x0 * ratio) + 8 + "px"; })
+        .attr("width", function(d) { return Math.round(d.x1 * ratio) - Math.round(d.x0 * ratio) + 1 + "px"; })
         .attr("height", function(d) { return Math.round(d.y1) - Math.round(d.y0) + "px"; })
         .attr("data-tippy-content", function(d) {  return d.data.id  })
         .style("cursor", "pointer")

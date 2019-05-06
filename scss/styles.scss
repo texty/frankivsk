@@ -1,4 +1,4 @@
-*{
+* {
   outline: none;
 }
 
@@ -470,6 +470,9 @@ p, h2 {
   margin: 50px 0;
   display:grid;
   grid-template-columns: 50% 50%;
+  @media(max-width:815px) and (orientation: portrait) {
+    display:block;
+  }
 }
 
 #treemaps h2 {
@@ -491,4 +494,57 @@ p, h2 {
   height:70vh;
 }
 
+.legend1, .legend2 {
+  @media(max-width:825px) {
+    display:none;
+  }
+}
+
+
+
+.legend1 text, .legend2 text, .legendMob text {
+  fill: #c6c6c6;
+}
+
+.legend2 {
+
+  rect {
+    fill:url(#MyGradient);
+  }
+
+
+rect.transparent{
+  //fill:transparent;
+  //fill:url(#MyGradient);
+  stroke:red;
+}
+}
+
+
+.legendMob {
+  @media(min-width:826px) {
+    display:none;
+  }
+
+rect.transparent {
+  stroke:red;
+  fill:#484d60;
+}
+
+rect.jellyfish {
+  fill:#8EE28A;
+}
+
+rect.yellow {
+  fill:yellow;
+}
+
+rect.white {
+  fill:white;
+}
+}
+
+.tippy-tooltip.tomato-theme {
+  text-align: left;
+}
 

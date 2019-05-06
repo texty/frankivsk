@@ -17,11 +17,17 @@ var viewBox = $("#scatter")[0].getBoundingClientRect();
 var width = viewBox.width - margin.right - margin.left;
 var height = viewBox.height;
 
-
-
 var color = d3.scaleOrdinal() // D3 Version 4
+    .domain(["вчасно", "затримка", "раніше"])
+    .range([ "white", "yellow", "#8EE28A"]);
+
+var result = d3.scaleOrdinal()
+    .domain(["надано", "відмовлено"])
+    .range([ "#484d60", "transparent"]);
+
+var legend_mob = d3.scaleOrdinal()
     .domain(["вчасно", "затримка", "раніше", "відмова"])
-    .range(["white", "yellow", "#8EE28A", "transparent"]);
+    .range([ "white", "yellow", "jellyfish", "transparent"]);
 
 function retrieve_plot_data(cb) {
     if (plot_data) return cb(plot_data);
@@ -78,44 +84,62 @@ retrieve_plot_data(function(data) {
         .attr('class', 'bubble');
 
 
-    //додаємо легенду
-    var legendContainer = svg.append("g")
-        .attr("id", "legend")
-        .attr('transform', 'translate(' + 0 + ',' + margin.top + ')');
+    /*----  Legend ---- */
+    points_g.append("g")
+        .attr("class", "legend1")
+        .attr("transform", "translate(50,50)");
 
-    legendContainer.append("rect")
-        .attr("fill", "rgb(72, 77, 96)")
-        .attr("width", "100px")
-        .attr("height", "100px")
-        .attr('x', width - 100)
-        .attr('y', -10);
+    var legend1 = d3.legendColor()
+        .labelFormat(d3.format(".2f"))
+        .useClass(false)
+        .title("Чи вчасно надана послуга:")
+        .titleWidth(200)
+        .scale(color);
 
-    var legend = legendContainer.selectAll('legend')
-        .data(color.domain())
-        .enter().append('g')
-        .attr('class', 'legend')
-        .attr('transform', function(d,i){ return 'translate(0,' + i * 20 + ')'; });
-
-    legend.append('rect')
-        .attr('x', width -  15)
-        .attr('width', 10)
-        .attr('height', 10)
-        .style('fill', color)
-        .style('stroke', function(d) {
-            if(d === "відмова"){
-                return "red"
-            }
-        });
-
-    legend.append('text')
-        .attr('x', width - 22)
-        .attr('y', 4)
-        .attr('dy', '.35em')
-        .style('text-anchor', 'end')
-        .text(function(d){ return d; });
+    points_g.select(".legend1")
+        .call(legend1);
 
 
+    points_g.append("g")
+        .attr("class", "legend2")
+        .attr("transform", "translate(50, 180)");
 
+    var legend2 = d3.legendColor()
+        .labelFormat(d3.format(".2f"))
+        .useClass(true)
+        .title("Результат надання:")
+        .titleWidth(200)
+        .scale(result);
+
+    points_g.select(".legend2")
+        .call(legend2);
+
+
+    points_g.append("g")
+        .attr("class", "legendMob")
+        .attr("transform", "translate(15,50)");
+
+    var legendMob = d3.legendColor()
+        .labelFormat(d3.format(".2f"))
+
+        .useClass(true)
+
+        .title("")
+        .titleWidth(200)
+        .scale(legend_mob);
+
+    points_g.select(".legendMob")
+        .call(legendMob);
+
+    points_g.selectAll(".legendMob rec")
+        .attr("class", function(d, i) {
+            return "rect" + i
+
+        })
+
+
+
+    /*----  Axis ---- */
     var gX = svg.append('g')
         .attr("class", "x-axis")
         .attr("transform", 'translate(' + margin.left + ', ' + (height - 40) + ")")
@@ -328,8 +352,8 @@ retrieve_plot_data(function(data) {
                 return yScale(d.counterTotal);
             });
 
-        legend.select('rect').attr('x', width);
-        legend.select('text').attr('x', width - 6);
+        // legend.select('rect').attr('x', width);
+        // legend.select('text').attr('x', width - 6);
 
 
         // swoopySel.selectAll('text')
