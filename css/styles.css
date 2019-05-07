@@ -306,11 +306,16 @@ header h1, header h3 {
 p, h2 {
   width: 60%;
   margin: 20px auto;
-  font-size: 16px;
   line-height: 1.6; }
   @media (max-width: 800px) {
     p, h2 {
       width: 90%; } }
+
+p {
+  font-size: 16px; }
+
+h2 {
+  font-size: 20px; }
 
 .node {
   background: lightgrey;
