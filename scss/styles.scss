@@ -7,6 +7,7 @@ body {
   background-color: rgb(72, 77, 96);
   color: #c6c6c6;
   font-size:13px;
+  margin:0;
 }
 
 header {
@@ -571,4 +572,78 @@ rect.white {
 .tippy-tooltip.tomato-theme {
   text-align: left;
 }
+
+footer {
+  grid-column:1/-1;
+  width:100%;
+  padding:20px 0;
+  background-color: white;
+
+
+
+  #logo {
+  padding:20px 0;
+  display: flex;
+  justify-content: center;
+
+
+  img {
+    height:70px;
+    margin-right: 40px;
+    @media(max-width:800px) {
+      height:50px;
+      margin-right: 20px;
+    }
+  }
+}
+
+/* Created by Texty*/
+#created_texty {
+  letter-spacing: 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  margin: 4em 15% 4em 15%;
+
+  i {
+    box-sizing: content-box;
+    margin: 0.5em;
+    cursor: pointer;
+    width: 1em;
+    height: 1em;
+    border: 1px solid lighten(grey, 15%);
+    color: lighten(grey, 15%);
+    border-radius: 50%;
+    padding: 0.5em;
+    font-size: 2.5em;
+    line-height: 1;
+    transition: all 0.5s;
+
+    &:hover {
+      border: 1px solid lighten(grey, 15%);
+      color: lighten(black, 15%);
+    }
+  }
+
+  img {
+    max-height: 4em;
+    max-width: 90%;
+  }
+
+  div {
+    text-align: center;
+  }
+
+  h3 {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+}
+
+}
+
+
 
