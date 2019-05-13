@@ -382,11 +382,17 @@ footer {
   width: 100%;
   padding: 20px 0;
   background-color: white;
+  color: black;
   /* Created by Texty*/ }
   footer #logo {
     padding: 20px 0;
     display: flex;
-    justify-content: center; }
+    width: 60%;
+    margin: auto;
+    justify-content: space-between; }
+    @media (max-width: 800px) {
+      footer #logo {
+        width: 90%; } }
     footer #logo img {
       height: 70px;
       margin-right: 40px; }

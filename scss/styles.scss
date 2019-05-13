@@ -578,13 +578,19 @@ footer {
   width:100%;
   padding:20px 0;
   background-color: white;
+  color:black;
 
 
 
   #logo {
-  padding:20px 0;
-  display: flex;
-  justify-content: center;
+    padding:20px 0;
+    display: flex;
+    width:60%;
+    margin:auto;
+    justify-content: space-between;
+    @media(max-width:800px) {
+      width:90%;
+    }
 
 
   img {
