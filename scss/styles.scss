@@ -464,6 +464,7 @@ p {
 }
 
 h2 {
+  margin-top:80px;
   font-size:20px;
 }
 
@@ -501,8 +502,8 @@ h2 {
 
 #my_dataviz1 {
   width:65%;
-  margin:auto;
-  height:95vh;
+  margin:50px auto;
+  height:80vh;
   @media(max-width:825px) and
   (orientation: landscape){
     height:130vh;

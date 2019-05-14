@@ -24,8 +24,8 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
         var treeViewBox = $("#my_dataviz1")[0].getBoundingClientRect();
         var treemapMargin = {top: 5, right: 10, bottom: 30, left: 10},
             treemapWidth = treeViewBox.width - treemapMargin.left - treemapMargin.right,
-            treemapHeight = treeViewBox.height - treemapMargin.top - treemapMargin.bottom - 100,
-            treemapInnerHeight = treemapHeight * 0.90,
+            treemapHeight = treeViewBox.height - treemapMargin.top - treemapMargin.bottom ,
+            treemapInnerHeight = treemapHeight * 0.95,
             treeLegend;
 
         var treemap1 = d3.select("#my_dataviz1")

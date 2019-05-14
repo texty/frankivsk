@@ -359,17 +359,26 @@ retrieve_plot_data(function(data) {
         rows.append("td")
             .text(function (d) {
                 return d.Freq
-            });
+            })
+            ;
 
         rows.append("td")
             .text(function (d) {
                 return d.Var1
             })
+            .style("font-weight", function(d) {
+                if(d.Var1 === "Реєстрація місця проживання/перебування"){
+                    return "800"
+                } else {
+                    return "300"
+                }
+
+                    })
             .on("click", function(d){
                 selectedNew = d.Var1;
                 var type = $('select[name=applicant]').val();
-                $('td').css("color", "#eae7e7");
-                $(this).css("color", "#8EE28A");
+                $('td').css("font-weight", "300");
+                $(this).css("font-weight", "800");
                 if(type === "select") {
                     if (selectedNew === "Реєстрація місця проживання/перебування") {
                         update(firstData, "counterTotal");
