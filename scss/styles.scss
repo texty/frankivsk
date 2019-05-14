@@ -205,6 +205,7 @@ header {
 }
 
 #table {
+  background-color: #f1f1f1;
   grid-row:2/3;
   grid-column: 1/2;
   max-height:83vh;
@@ -238,6 +239,7 @@ table {
 
 
 td {
+  padding-right:2px;
   padding-bottom:20px;
   font-size:15px;
   color: rgb(72, 77, 96);;
@@ -303,17 +305,18 @@ td {
 
 
 g.tick text {
-  fill: $light;
+  font-size: 14px;
+  fill: $backgroundColor;
 }
 
 g.tick line {
-  fill: $light;
-  stroke: $light;
+  fill: $backgroundColor;
+  stroke: $backgroundColor;
 }
 
 g.tick path {
-  fill: $light;
-  stroke: $light;
+  fill: $backgroundColor;
+  stroke: $backgroundColor;
 }
 
 .legend {

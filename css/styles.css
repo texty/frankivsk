@@ -134,6 +134,7 @@ header {
   fill: #484d60; }
 
 #table {
+  background-color: #f1f1f1;
   grid-row: 2/3;
   grid-column: 1/2;
   max-height: 83vh;
@@ -156,6 +157,7 @@ header {
   #table table {
     direction: rtl; }
   #table td {
+    padding-right: 2px;
     padding-bottom: 20px;
     font-size: 15px;
     color: #484d60;
@@ -192,15 +194,16 @@ header {
   fill: #484d60; }
 
 g.tick text {
-  fill: white; }
+  font-size: 14px;
+  fill: #484d60; }
 
 g.tick line {
-  fill: white;
-  stroke: white; }
+  fill: #484d60;
+  stroke: #484d60; }
 
 g.tick path {
-  fill: white;
-  stroke: white; }
+  fill: #484d60;
+  stroke: #484d60; }
 
 .legend {
   fill: white;
