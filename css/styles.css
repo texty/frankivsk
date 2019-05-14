@@ -26,6 +26,7 @@ header {
       header h1 {
         font-size: 25pt; } }
   header h3 {
+    color: white;
     text-align: center;
     width: 80%;
     margin: 20px auto 20px auto;
@@ -156,14 +157,14 @@ header {
     direction: rtl; }
   #table td {
     padding-bottom: 20px;
-    font-size: 13px;
-    color: white;
+    font-size: 15px;
+    color: #484d60;
     cursor: pointer; }
   #table td:nth-child(2) {
     padding-right: 10px; }
   #table th {
-    padding-bottom: 20px;
-    text-transform: uppercase;
+    border-right: 1px solid white;
+    background-color: #484d60;
     color: white; }
   #table th:nth-child(2) {
     text-align: right;
@@ -279,7 +280,7 @@ path.domain {
   .header h2 {
     margin: 0 0 20px 0;
     width: 100%;
-    color: white;
+    color: #484d60;
     text-align: left; }
   .header select {
     padding: 5px 10px;
@@ -288,7 +289,7 @@ path.domain {
     background-color: #484d60; }
   .header label {
     margin-bottom: 10px;
-    color: white;
+    color: #484d60;
     font-size: 14px;
     display: inline-block; }
   .header .field {
@@ -354,7 +355,7 @@ h2 {
     display: none; } }
 
 .legend1 text, .legend2 text, .legendMob text, .treeLegend text {
-  fill: #c6c6c6; }
+  fill: #484d60; }
 
 .legend2 rect {
   fill: url(#MyGradient); }

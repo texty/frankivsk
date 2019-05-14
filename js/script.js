@@ -45,9 +45,10 @@ var viewBox = $("#scatter")[0].getBoundingClientRect();
 var width = viewBox.width - margin.right - margin.left;
 var height = viewBox.height;
 
+// #8EE28A
 var color = d3.scaleOrdinal() // D3 Version 4
     .domain(["вчасно", "затримка", "раніше"])
-    .range([ "rgb(72, 77, 96)", "yellow", "#4FC595"]);
+    .range([ "lightgrey", "#FFD500", "#4FC595"]);
 
 var result = d3.scaleOrdinal()
     .domain(["надано", "відмовлено"])
@@ -345,7 +346,7 @@ retrieve_plot_data(function(data) {
             .text("К-ть");
 
         hRow.append("th")
-            .text("Послуги");
+            .text("Послуга");
 
         var tbody = table
             .append("tbody");
