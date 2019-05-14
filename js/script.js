@@ -47,7 +47,7 @@ var height = viewBox.height;
 
 var color = d3.scaleOrdinal() // D3 Version 4
     .domain(["вчасно", "затримка", "раніше"])
-    .range([ "white", "yellow", "#8EE28A"]);
+    .range([ "rgb(72, 77, 96)", "yellow", "#4FC595"]);
 
 var result = d3.scaleOrdinal()
     .domain(["надано", "відмовлено"])

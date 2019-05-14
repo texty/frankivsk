@@ -3,8 +3,8 @@
 
 body {
   font-family: 'Roboto Mono', monospace;
-  background-color: #484d60;
-  color: white;
+  background-color: white;
+  color: #484d60;
   font-size: 15px;
   margin: 0; }
 
@@ -385,17 +385,19 @@ footer {
   color: black;
   /* Created by Texty*/ }
   footer p {
+    color: #484d60;
     margin: 0 auto !important; }
   footer #logo {
+    color: #484d60;
     padding: 20px 0;
     display: flex;
     width: 60%;
     margin: auto;
+    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     -webkit-box-pack: center !important;
-    -ms-flex-pack: center !important;
-    justify-content: center !important; }
+    -ms-flex-pack: center !important; }
     @media (max-width: 800px) {
       footer #logo {
         width: 90%; } }
@@ -407,7 +409,6 @@ footer {
           height: 50px;
           margin-right: 20px; } }
   footer #created_texty {
-    letter-spacing: 1px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -421,22 +422,22 @@ footer {
       cursor: pointer;
       width: 1em;
       height: 1em;
-      border: 1px solid #a6a6a6;
-      color: #a6a6a6;
+      border: 1px solid #484d60;
+      color: #484d60;
       border-radius: 50%;
       padding: 0.5em;
-      font-size: 2.5em;
-      line-height: 1;
-      transition: all 0.5s; }
+      font-size: 2.0em;
+      line-height: 1; }
       footer #created_texty i:hover {
-        border: 1px solid #a6a6a6;
-        color: #262626; }
+        border: 1px solid #8EE28A;
+        color: #8EE28A; }
     footer #created_texty img {
       max-height: 4em;
       max-width: 90%; }
     footer #created_texty div {
       text-align: center; }
     footer #created_texty h3 {
+      color: #484d60;
       text-align: center;
       font-size: 1.5rem; }
 
