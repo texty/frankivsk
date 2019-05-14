@@ -17,7 +17,6 @@ body {
 }
 
 header {
-
   background-image: url(../img/cover.gif);
   background-repeat: no-repeat;
   background-position: center center;
@@ -645,8 +644,8 @@ footer {
 
     &:hover {
       //border: 1px solid lighten(grey, 15%);
-      border: 1px solid $green;
-      color: $green;
+      border: 1px solid #4FC595;
+      color: #4FC595;
     }
   }
 
