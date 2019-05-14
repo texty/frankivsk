@@ -1,3 +1,6 @@
+$light: white;
+$green: #8EE28A;
+
 * {
   outline: none;
 }
@@ -5,21 +8,26 @@
 body {
   font-family: 'Roboto Mono', monospace;
   background-color: rgb(72, 77, 96);
-  color: #c6c6c6;
-  font-size:13px;
+  color: $light;
+  font-size:15px;
   margin:0;
 }
 
 header {
+  background-image: url(../img/cover.gif);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
   height:100vh;
   display:flex;
-
+  flex-direction: column;
 
   h1 {
-    width:80%;
-    margin:auto;
-    font-size:45pt;
+    width:90%;
+    margin:20px auto 20px auto;
+    font-size:40pt;
     text-align: center;
+    color: white;
     @media(max-width:800px) {
       font-size:25pt;
     }
@@ -28,8 +36,8 @@ header {
   h3 {
     text-align: center;
     width:80%;
-    margin:auto;
-    font-size:25pt;
+    margin:20px auto 20px auto;
+    font-size:18pt;
     @media(max-width:800px) {
       font-size:16pt;
     }
@@ -101,7 +109,7 @@ header {
   margin-left:40px;
   width:80%;
   height:100px;
-  color:#a8a8a8;
+  color:$light;;
   display:flex;
 
   div {
@@ -158,7 +166,7 @@ header {
 
   input[type="radio"] {
     margin-left:30px;
-    color:#a8a8a8;
+    color:$light;;
     font-size:11px;
   }
 }
@@ -228,7 +236,7 @@ table {
 td {
   padding-bottom:20px;
   font-size:13px;
-  color: #a8a8a8;
+  color: $light;
   cursor:pointer;
 
 
@@ -242,7 +250,7 @@ td {
   th {
     padding-bottom:20px;
     text-transform: uppercase;
-    color:#a8a8a8;
+    color:$light;
   }
 
   th:nth-child(2){
@@ -265,8 +273,8 @@ td {
 
   td {
     padding-bottom:20px;
-    font-size:15px;
-    color: #a8a8a8;
+    font-size:18px;
+    color: $light;
     cursor:pointer;
   }
 
@@ -289,21 +297,21 @@ td {
 
 
 g.tick text {
-  fill: #cccccc;
+  fill: $light;
 }
 
 g.tick line {
-  fill: #cccccc;
-  stroke: #cccccc;
+  fill: $light;
+  stroke: $light;
 }
 
 g.tick path {
-  fill: #cccccc;
-  stroke: #cccccc;
+  fill: $light;
+  stroke: $light;
 }
 
 .legend {
-  fill:#cccccc;
+  fill:$light;
   font-size: 15px;
 }
 
@@ -399,7 +407,7 @@ path.domain{
  h2 {
   margin:0 0 20px 0;
   width:100%;
-  color:#c6c6c6;
+  color:$light;
   text-align: left;
 }
 
@@ -409,14 +417,14 @@ path.domain{
 select {
   padding:5px 10px;
   letter-spacing:1px;
-  color:#c6c6c6 ;
+  color:$light;
   background-color: #484d60;
 }
 
 
 label {
   margin-bottom:10px;
-  color:#c6c6c6;
+  color:$light;
   font-size: 14px;
   display: inline-block;
 }
@@ -428,38 +436,31 @@ label {
 
   #unpopular {
     //border:none;
-    color:#c6c6c6 ;
+    color:$light;
     background-color: #484d60;
     padding: 10px;
-    border: 0.5px solid lightgrey;
+    border: 0.5px solid $light;
     cursor:pointer;
     letter-spacing: 1px;
   }
 }
 
 
-header {
-  display:flex;
-  flex-direction: column;
-  height:100vh;
-}
-
-header h1, header h3 {
-  margin:auto;
-}
 
 p, h2 {
-  width:60%;
-  margin:20px auto;
+  width: 60%;
+  margin: 20px auto;
   //font-size:16px;
   line-height: 1.6;
-  @media(max-width:800px){
-    width:90%;
+  @media(max-width: 800px) {
+    width: 90%;
   }
 }
 
-p{
-  font-size:16px;
+
+p {
+  font-size:18px;
+  line-height: 1.6;
 }
 
 h2 {
@@ -512,12 +513,6 @@ h2 {
   }
 }
 
-//.treemap-text {
-//  font-size:13px;
-//  @media(max-width:825px) {
-//    font-size:10px;
-//  }
-//}
 
 .legend1, .legend2 {
   @media(max-width:825px) {
@@ -576,9 +571,13 @@ rect.white {
 footer {
   grid-column:1/-1;
   width:100%;
-  padding:20px 0;
-  background-color: white;
+  padding:5px 0;
+  background-color: $light;
   color:black;
+
+  p {
+    margin: 0 auto !important;
+  }
 
 
 
@@ -587,7 +586,12 @@ footer {
     display: flex;
     width:60%;
     margin:auto;
-    justify-content: space-between;
+    //justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    -webkit-box-pack: center!important;
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
     @media(max-width:800px) {
       width:90%;
     }

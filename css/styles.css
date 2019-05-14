@@ -4,26 +4,32 @@
 body {
   font-family: 'Roboto Mono', monospace;
   background-color: #484d60;
-  color: #c6c6c6;
-  font-size: 13px;
+  color: white;
+  font-size: 15px;
   margin: 0; }
 
 header {
+  background-image: url(../img/cover.gif);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
   height: 100vh;
-  display: flex; }
+  display: flex;
+  flex-direction: column; }
   header h1 {
-    width: 80%;
-    margin: auto;
-    font-size: 45pt;
-    text-align: center; }
+    width: 90%;
+    margin: 20px auto 20px auto;
+    font-size: 40pt;
+    text-align: center;
+    color: white; }
     @media (max-width: 800px) {
       header h1 {
         font-size: 25pt; } }
   header h3 {
     text-align: center;
     width: 80%;
-    margin: auto;
-    font-size: 25pt; }
+    margin: 20px auto 20px auto;
+    font-size: 18pt; }
     @media (max-width: 800px) {
       header h3 {
         font-size: 16pt; } }
@@ -67,7 +73,7 @@ header {
   margin-left: 40px;
   width: 80%;
   height: 100px;
-  color: #a8a8a8;
+  color: white;
   display: flex; }
   #scatterHeader div {
     margin: auto 0; }
@@ -106,7 +112,7 @@ header {
       margin-bottom: 50px; } }
   #typeFilter input[type="radio"] {
     margin-left: 30px;
-    color: #a8a8a8;
+    color: white;
     font-size: 11px; }
 
 #scatter {
@@ -151,14 +157,14 @@ header {
   #table td {
     padding-bottom: 20px;
     font-size: 13px;
-    color: #a8a8a8;
+    color: white;
     cursor: pointer; }
   #table td:nth-child(2) {
     padding-right: 10px; }
   #table th {
     padding-bottom: 20px;
     text-transform: uppercase;
-    color: #a8a8a8; }
+    color: white; }
   #table th:nth-child(2) {
     text-align: right;
     padding-right: 10px; }
@@ -171,8 +177,8 @@ header {
   overflow-y: auto; }
   #unpopular-services td {
     padding-bottom: 20px;
-    font-size: 15px;
-    color: #a8a8a8;
+    font-size: 18px;
+    color: white;
     cursor: pointer; }
   #unpopular-services td:nth-child(1) {
     padding-right: 30px; }
@@ -185,18 +191,18 @@ header {
   fill: #484d60; }
 
 g.tick text {
-  fill: #cccccc; }
+  fill: white; }
 
 g.tick line {
-  fill: #cccccc;
-  stroke: #cccccc; }
+  fill: white;
+  stroke: white; }
 
 g.tick path {
-  fill: #cccccc;
-  stroke: #cccccc; }
+  fill: white;
+  stroke: white; }
 
 .legend {
-  fill: #cccccc;
+  fill: white;
   font-size: 15px; }
 
 path.domain {
@@ -273,36 +279,28 @@ path.domain {
   .header h2 {
     margin: 0 0 20px 0;
     width: 100%;
-    color: #c6c6c6;
+    color: white;
     text-align: left; }
   .header select {
     padding: 5px 10px;
     letter-spacing: 1px;
-    color: #c6c6c6;
+    color: white;
     background-color: #484d60; }
   .header label {
     margin-bottom: 10px;
-    color: #c6c6c6;
+    color: white;
     font-size: 14px;
     display: inline-block; }
   .header .field {
     display: inline-block;
     vertical-align: top; }
   .header #unpopular {
-    color: #c6c6c6;
+    color: white;
     background-color: #484d60;
     padding: 10px;
-    border: 0.5px solid lightgrey;
+    border: 0.5px solid white;
     cursor: pointer;
     letter-spacing: 1px; }
-
-header {
-  display: flex;
-  flex-direction: column;
-  height: 100vh; }
-
-header h1, header h3 {
-  margin: auto; }
 
 p, h2 {
   width: 60%;
@@ -313,7 +311,8 @@ p, h2 {
       width: 90%; } }
 
 p {
-  font-size: 16px; }
+  font-size: 18px;
+  line-height: 1.6; }
 
 h2 {
   font-size: 20px; }
@@ -380,16 +379,22 @@ h2 {
 footer {
   grid-column: 1/-1;
   width: 100%;
-  padding: 20px 0;
+  padding: 5px 0;
   background-color: white;
   color: black;
   /* Created by Texty*/ }
+  footer p {
+    margin: 0 auto !important; }
   footer #logo {
     padding: 20px 0;
     display: flex;
     width: 60%;
     margin: auto;
-    justify-content: space-between; }
+    align-items: center;
+    flex-wrap: wrap;
+    -webkit-box-pack: center !important;
+    -ms-flex-pack: center !important;
+    justify-content: center !important; }
     @media (max-width: 800px) {
       footer #logo {
         width: 90%; } }

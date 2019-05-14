@@ -368,8 +368,8 @@ retrieve_plot_data(function(data) {
             .on("click", function(d){
                 selectedNew = d.Var1;
                 var type = $('select[name=applicant]').val();
-                $('td').css("color", "#a8a8a8");
-                $(this).css("color", "white");
+                $('td').css("color", "#eae7e7");
+                $(this).css("color", "#8EE28A");
                 if(type === "select") {
                     if (selectedNew === "Реєстрація місця проживання/перебування") {
                         update(firstData, "counterTotal");
