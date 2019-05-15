@@ -232,6 +232,13 @@ header {
   }
 
 
+  tbody:before {
+    content: "-";
+    display: block;
+    line-height: 1em;
+    color: transparent;
+  }
+
 table {
   direction:rtl;
 }
@@ -244,8 +251,6 @@ td {
   font-size:15px;
   color: rgb(72, 77, 96);;
   cursor:pointer;
-
-
   }
 
   td:nth-child(2){
@@ -516,6 +521,9 @@ h2 {
   @media(max-width:825px) and
   (orientation: landscape){
     height:130vh;
+  }
+  @media(max-width: 800px) {
+    width: 90%;
   }
 
   text {
