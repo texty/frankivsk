@@ -7,7 +7,7 @@ if(screen.width > 800) {  ratio = 2;} else {  ratio = 0.8 }
 
 var treeColor = d3.scaleOrdinal()
     .domain(["~3 млн", "350 т.", "~300 т.", "~70 т.", "безкошт."])
-    .range(["#00868E", "#12A698", "#4FC595", "#8EE28A", "#E6EFFF"]);
+    .range(["#1e9b68", "#1bbb7a", "#47c894", "#76cca9", "#E6EFFF"]);
 
 
 d3.csv('data/top_frankivsk.csv', function(treedata1) {
