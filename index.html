@@ -60,10 +60,12 @@
 
 <main>
     <header>
-        <img style="width:100%" src="img/white-cover.gif"/>
-        <h1>10 послуг Івано-Франківського ЦНАПу</h1>
-        <h3>Візуалізація даних Центру надання адміністративних послуг м. Івано-Франківська розповідає про життя міста </h3>
-
+        <div id="cover" style=""></div>
+        <!--<img style="width:100%" src="img/white-cover.gif"/>-->
+        <div id="header-text">
+            <h1>10 послуг Івано-Франківського ЦНАПу</h1>
+            <h3>Візуалізація даних Центру надання адміністративних послуг м. Івано-Франківська розповідає про життя міста </h3>
+        </div>
     </header>
 
 
@@ -222,6 +224,21 @@
 <script src="js/script.js"></script>
 <script src="js/drawTable.js"></script>
 <script src="js/treemap.js"></script>
+
+<script>
+    //cover на 100% висоти
+    var title = $("#header-text")[0].getBoundingClientRect();
+    var coverHeight = window.innerHeight - title.height - 50;
+    d3.select("#cover").style("height", coverHeight + "px");
+
+
+    $(window).on("resize", function() {
+        var title = $("#header-text")[0].getBoundingClientRect();
+        var coverHeight = window.innerHeight - title.height - 50;
+        d3.select("#cover").style("height", coverHeight + "px");
+    })
+</script>
+
 
 <script>
     var modal = document.getElementById('myModal');
