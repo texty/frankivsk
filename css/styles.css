@@ -33,22 +33,22 @@ header {
     @media (max-width: 800px) {
       header h1 {
         font-size: 25pt; } }
+  header h3 {
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #484d60;
+    text-align: center;
+    width: 96%;
+    margin: 0 auto;
+    font-size: 1.4vw; }
+    @media (max-width: 1100px) {
+      header h3 {
+        font-size: 16pt; } }
 
 #title {
   text-align: center;
   margin: auto;
   width: 70%; }
-
-h3 {
-  color: #484d60;
-  text-align: center;
-  width: 96%;
-  margin: 0 auto;
-  font-size: 1.4vw;
-  text-align: center; }
-  @media (max-width: 1100px) {
-    h3 {
-      font-size: 16pt; } }
 
 #text p {
   width: 60%;
