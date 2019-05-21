@@ -1,3 +1,11 @@
+/* Smartphones (portrait and landscape) ----------- */
+/* Smartphones (landscape) ----------- */
+/* Smartphones (portrait) ----------- */
+/* iPads (portrait and landscape) ----------- */
+/* iPads (landscape) ----------- */
+/* iPads (portrait) ----------- */
+/* Desktops and laptops ----------- */
+/* Large screens ----------- */
 * {
   outline: none; }
 
@@ -7,6 +15,68 @@ body {
   color: #484d60;
   font-size: 15px;
   margin: 0; }
+
+#logo-soc {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1000; }
+
+.logo {
+  margin: 10px;
+  height: 50px;
+  width: 150px;
+  grid-column: 1/2; }
+  @media screen and (min-width: 1824px) {
+    .logo {
+      width: 180px; } }
+  @media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .logo {
+      display: none; } }
+  .logo a {
+    height: 100%;
+    display: flex; }
+    .logo a img {
+      margin: auto;
+      margin-top: 0; }
+
+#soc {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px; }
+  @media (max-width: 800px) {
+    #soc {
+      width: 100%; } }
+  #soc div#translate {
+    display: flex; }
+  #soc a {
+    margin: 5px 0;
+    text-decoration: none; }
+  #soc a span {
+    border-bottom: 1px dashed black;
+    margin-right: 20px;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: black !important;
+    background-color: rgba(225, 225, 225, 0.7); }
+    @media screen and (min-width: 1824px) {
+      #soc a span {
+        font-size: 14px; } }
+  #soc i {
+    font-size: 40px;
+    color: #484d60;
+    margin: 0 0 0 0.5em;
+    max-height: 1em;
+    transition: all 0.5s; }
+    @media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+      #soc i {
+        font-size: 20px; } }
+    #soc i:hover {
+      color: #4FC595; }
 
 header {
   position: relative;
@@ -212,6 +282,9 @@ header {
 g.tick text {
   font-size: 14px;
   fill: #484d60; }
+  @media (max-width: 800px) {
+    g.tick text {
+      font-size: 11px; } }
 
 g.tick line {
   fill: #484d60;

@@ -61,7 +61,7 @@ var legend_mob = d3.scaleOrdinal()
 function retrieve_plot_data(cb) {
     if (plot_data) return cb(plot_data);
 
-    return d3.csv("data/data_may_06.csv", function(err, myData){
+    return d3.csv("data/data_2018.csv", function(err, myData){
         if (err) throw err;
 
         myData.forEach(function (d) {
@@ -94,10 +94,10 @@ svg.append("defs").append("clipPath")
 //         .discontinuityProvider(fc.discontinuitySkipWeekends());
 
 
-var xScale = d3.scaleTime().domain([parseDate("2017-01-01"), parseDate("2017-12-31")]).range([0, width]);
+var xScale = d3.scaleTime().domain([parseDate("2018-01-01"), parseDate("2018-09-30")]).range([0, width]);
 var xAxis = d3.axisBottom(xScale);
 
-var yScale = d3.scaleLinear().domain([0, 150]).range([height, 0]);
+var yScale = d3.scaleLinear().domain([0, 240]).range([height, 0]);
 var yAxis = d3.axisLeft(yScale);
 
 retrieve_plot_data(function(data) {
@@ -242,8 +242,8 @@ retrieve_plot_data(function(data) {
         // UPDATE
         bubble
             .transition(t)
-            .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
-            .attr('height', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
+            .attr('width', height / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
+            .attr('height', height / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
             .attr('x', function (d) {
                 return xScale(d.registration);
             })
@@ -272,8 +272,8 @@ retrieve_plot_data(function(data) {
             .style('fill', function (d) {
                 return color(d.color);
             })
-            .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
-            .attr('height', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
+            .attr('width', height / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
+            .attr('height', height / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
             .style("opacity", 1)
             .style("stroke", function(d) {
                 if(d.positive != "позитивне") {
@@ -322,7 +322,7 @@ retrieve_plot_data(function(data) {
 
 
     //draw TABLE
-    d3.csv('data/services.csv', function (tabledata) {
+    d3.csv('data/services_2018.csv', function (tabledata) {
         tabledata.forEach(function (d) {
             d.Freq = +d.Freq;
         });
