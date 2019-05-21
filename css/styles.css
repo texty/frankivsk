@@ -363,17 +363,21 @@ path.domain {
   height: max-content;
   background-color: rgba(198, 198, 198, 0.2);
   display: grid;
-  grid-template-columns: 20% auto 20%; }
+  grid-template-columns: 25% auto 30%; }
   @media only screen and (max-width: 825px) and (orientation: portrait) {
     .header {
       display: block; } }
   .header div {
-    margin: 0 50px 0 0; }
+    margin: 0 50px 0 0;
+    position: relative; }
   .header h2 {
-    margin: 0 0 20px 0;
+    margin: 20px 0 10px 0;
     width: 100%;
     color: #484d60;
     text-align: left; }
+    @media (max-width: 800px) {
+      .header h2 {
+        font-size: 16px; } }
   .header select {
     padding: 5px 10px;
     letter-spacing: 1px;
@@ -388,12 +392,17 @@ path.domain {
     display: inline-block;
     vertical-align: top; }
   .header #unpopular {
+    position: absolute;
+    bottom: 0;
     color: white;
     background-color: #484d60;
     padding: 10px;
     border: 0.5px solid white;
     cursor: pointer;
     letter-spacing: 1px; }
+    @media only screen and (max-width: 825px) and (orientation: portrait) {
+      .header #unpopular {
+        position: relative; } }
 
 p, h2 {
   width: 60%;

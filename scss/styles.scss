@@ -540,7 +540,7 @@ path.domain{
   height:max-content;
   background-color: rgba(198, 198, 198, 0.2);
   display:grid;
-  grid-template-columns: 20% auto 20%;
+  grid-template-columns: 25% auto 30%;
   @media only screen
   and (max-width:825px)
   and (orientation: portrait){
@@ -549,13 +549,17 @@ path.domain{
 
  div {
   margin:0 50px 0 0;
+   position:relative;
 }
 
  h2 {
-  margin:0 0 20px 0;
+  margin:20px 0 10px 0;
   width:100%;
   color:$backgroundColor;
   text-align: left;
+   @media(max-width:800px){
+     font-size:16px;
+   }
 }
 
 
@@ -582,13 +586,19 @@ label {
 }
 
   #unpopular {
-    //border:none;
+    position:absolute;
+    bottom:0;
     color:$light;
     background-color: #484d60;
     padding: 10px;
     border: 0.5px solid $light;
     cursor:pointer;
     letter-spacing: 1px;
+    @media only screen
+    and (max-width:825px)
+    and (orientation: portrait){
+      position:relative;
+    }
   }
 }
 
