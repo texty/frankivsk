@@ -737,6 +737,8 @@ footer {
   color:black;
 
   p {
+    width:60%;
+    max-width:800px;
     color: rgb(72, 77, 96);
     margin: 0 auto !important;
   }
@@ -748,10 +750,11 @@ footer {
     padding:20px 0;
     display: flex;
     width:60%;
+    max-width:800px;
     margin:auto;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     -webkit-box-pack: center!important;
     -ms-flex-pack: center!important;
     //justify-content: center!important;
@@ -761,11 +764,11 @@ footer {
 
 
   img {
-    height:70px;
-    margin-right: 40px;
+    //width:100%;
+    //margin-right: 2%;
     @media(max-width:800px) {
-      height:50px;
-      margin-right: 20px;
+      //height:50px;
+      //margin-right: 2%;
     }
   }
 }

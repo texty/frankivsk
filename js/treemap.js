@@ -111,7 +111,7 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
         //додаємо легенду
         treemap1.append("g")
             .attr("class", "treeLegend")
-            .attr("transform", "translate("+ 10 +',' + (treemapInnerHeight + 20) + ")");
+            .attr("transform", "translate("+ 10 +',' + (treemapInnerHeight + 5) + ")");
 
         treemap1.select(".treeLegend")
             .call(treeLegend);
