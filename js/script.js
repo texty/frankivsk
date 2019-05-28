@@ -302,8 +302,8 @@ retrieve_plot_data(function(data) {
         svg.select('.y-axis').call(yAxis);
 
         points_g.selectAll(".bubble")
-            .attr('width', width / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
-            .attr('height', 1.5)
+            .attr('width', height / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
+            .attr('height', height / (Math.abs(xScale.domain()[0] - xScale.domain()[1]) / oneDay))
             .attr('x', function (d) {
                 return xScale(d.registration);
             })

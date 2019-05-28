@@ -6,9 +6,13 @@ var ratio;
 if(screen.width > 800) {  ratio = 2;} else {  ratio = 0.8 }
 
 var treeColor = d3.scaleOrdinal()
-    .domain(["~3 млн", "350 т.", "~300 т.", "~70 т.", "безкошт."])
+    .domain(["~3 млн", "~300 т.", "> 200 т.", "~70 т.", "безкошт."])
     .range(["#1e9b68", "#1bbb7a", "#47c894", "#76cca9", "#E6EFFF"]);
 
+
+var treeColorMap = d3.scaleOrdinal()
+    .domain(["2864769.6", "296280.3", "200000", "68040.8", "0"])
+    .range(["#1e9b68", "#1bbb7a", "#47c894", "#76cca9", "#E6EFFF"]);
 
 d3.csv('data/top_frankivsk.csv', function(treedata1) {
 
@@ -57,7 +61,10 @@ d3.csv('data/top_frankivsk.csv', function(treedata1) {
                     '<br> <b>Сума адміністративного збору: </b>' + d.data.sum + " грн"
             })
             .style("cursor", "pointer")
-            .style("fill", function(d) {  return d.data.opacity   }) ;
+            .style("fill", function(d) {
+                console.log(d.data.sum);
+                return treeColorMap(d.data.sum)
+            }) ;
 
 
         /* окремі налаштування довжини тексту і легенди для різних екранів */

@@ -173,9 +173,6 @@ header {
       font-size: 16pt;
     }
   }
-
-
-
 }
 
   #title {
@@ -185,6 +182,11 @@ header {
   }
 
 
+  .subtitle {
+    font-size:25px !important;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
 
 
 #text {
@@ -632,6 +634,7 @@ h2 {
 }
 #content {
   position:relative;
+  margin-top:50px;
 }
 
 #treemaps {
