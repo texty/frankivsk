@@ -744,6 +744,9 @@ footer {
     max-width:800px;
     color: rgb(72, 77, 96);
     margin: 0 auto !important;
+    @media(max-width:800px) {
+      width:90%;
+    }
   }
 
 

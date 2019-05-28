@@ -500,6 +500,9 @@ footer {
     max-width: 800px;
     color: #484d60;
     margin: 0 auto !important; }
+    @media (max-width: 800px) {
+      footer p {
+        width: 90%; } }
   footer #logo {
     color: #484d60;
     padding: 20px 0;
